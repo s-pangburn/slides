@@ -1,26 +1,8 @@
 import React from 'react';
 import Remarkable from 'remarkable';
-// import Highlight from 'highlight.js';
-var hljs = require('highlight.js');
-window.hljs = hljs;
+const hljs = require('highlightjs');
 
-// const md = new Remarkable({
-//   highlight: function (str, lang) {
-//     if (lang && hljs.getLanguage(lang)) {
-//       try {
-//         return hljs.highlight(lang, str).value;
-//       } catch (err) {}
-//     }
-//
-//     try {
-//       return hljs.highlightAuto(str).value;
-//     } catch (err) {}
-//
-//     return ''; // use external default escaping
-//   }
-// });
-
-var md = new Remarkable('full', {
+const md = new Remarkable({
   html:         false,        // Enable HTML tags in source
   xhtmlOut:     false,        // Use '/' to close single tags (&lt;br /&gt;)
   breaks:       false,        // Convert '\n' in paragraphs into &lt;br&gt;
@@ -69,7 +51,6 @@ class Input extends React.Component {
   }
 
   rawMarkup() {
-    debugger
     return { __html: md.render(this.state.markdown) };
   }
 
@@ -86,15 +67,3 @@ class Input extends React.Component {
 
 export default Input;
 
-// <div className="render-preview" dangerouslySetInnerHTML={{__html: this.state.html}}>
-
-
-// # My header
-// * A bullet point
-// * Another bullet point
-//
-// ### Smaller Header
-//
-// **bold text**
-//
-// *italic text*
