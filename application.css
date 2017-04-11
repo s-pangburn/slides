@@ -32,9 +32,19 @@ input[type="text"], textarea {
   justify-content: space-around;
 }
 
-.render-preview {
+.render-container {
   width: 45%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.render-preview {
   //outline: solid black 1px;
   color: lightgrey;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 550px;
 }

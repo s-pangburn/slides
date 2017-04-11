@@ -42,23 +42,43 @@ class Input extends React.Component {
     this._updateText = this._updateText.bind(this);
     this.rawMarkup = this.rawMarkup.bind(this);
 
-    this.state = { markdown: "", html: "" };
+    this.state = { slides: [], currentSlide: 0 };
   }
 
   _updateText(e) {
     e.preventDefault();
-    this.setState({ markdown: e.currentTarget.value });
+    this.setState({ slides: e.currentTarget.value.split("---") }, this._updateCurrentSlide);
+    //this.setState({ markdown: e.currentTarget.value });
+  }
+
+  _updateCurrentSlide() {
+    const cursorLocation = document.querySelector('textarea').selectionEnd;
+    //const slides = this.state.markdown.split("---")[this.state.currentSlide];
+    let charCount = 0;
+
+    for(let i = 0; i < this.state.slides.length; i++) {
+      if(cursorLocation <= (charCount + this.state.slides[i].length)) {
+        this.setState({ currentSlide: i });
+        return;
+      } else {
+        // adding 3 to account for '---' lost in split
+        charCount += (this.state.slides[i].length + 3);
+      }
+    }
   }
 
   rawMarkup() {
-    return { __html: md.render(this.state.markdown) };
+    //const slide = this.state.markdown.split("---")[this.state.currentSlide];
+    return { __html: md.render(this.state.slides[this.state.currentSlide]) };
   }
 
   render() {
+    console.log(`currentSlid: ${this.state.currentSlide}`);
     return (
       <div className="input-container">
-        <textarea onChange={this._updateText}/>
-        <div className="render-preview" dangerouslySetInnerHTML={this.rawMarkup()}>
+        <textarea onChange={this._updateText} onClick={this._updateText}/>
+        <div className="render-container">
+          <div className="render-preview" dangerouslySetInnerHTML={this.rawMarkup()}/>
         </div>
       </div>
     )
