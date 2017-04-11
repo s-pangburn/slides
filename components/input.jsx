@@ -36,7 +36,7 @@ const md = new Remarkable({
 
 
 
-class Input extends React.Component {
+class Edit extends React.Component {
   constructor() {
     super();
     this._updateText = this._updateText.bind(this);
@@ -48,12 +48,10 @@ class Input extends React.Component {
   _updateText(e) {
     e.preventDefault();
     this.setState({ slides: e.currentTarget.value.split("---") }, this._updateCurrentSlide);
-    //this.setState({ markdown: e.currentTarget.value });
   }
 
   _updateCurrentSlide() {
     const cursorLocation = document.querySelector('textarea').selectionEnd;
-    //const slides = this.state.markdown.split("---")[this.state.currentSlide];
     let charCount = 0;
 
     for(let i = 0; i < this.state.slides.length; i++) {
@@ -68,22 +66,28 @@ class Input extends React.Component {
   }
 
   rawMarkup() {
-    //const slide = this.state.markdown.split("---")[this.state.currentSlide];
     return { __html: md.render(this.state.slides[this.state.currentSlide]) };
   }
 
   render() {
-    console.log(`currentSlid: ${this.state.currentSlide}`);
-    return (
-      <div className="input-container">
-        <textarea onChange={this._updateText} onClick={this._updateText}/>
-        <div className="render-container">
-          <div className="render-preview" dangerouslySetInnerHTML={this.rawMarkup()}/>
+    let content;
+
+    if(this.props.location.pathname.slice(1) === "") {
+      content = (
+        <div className="input-container">
+          <textarea onChange={this._updateText} onClick={this._updateText}/>
+          <div className="render-container">
+            <div className="render-preview" dangerouslySetInnerHTML={this.rawMarkup()}/>
+          </div>
         </div>
-      </div>
-    )
+      );
+    } else {  
+      content = <div>presentation</div>;
+    }
+    
+    return content;
   }
 }
 
-export default Input;
+export default Edit;
 

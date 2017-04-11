@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Input from './input';
+import Edit from './input';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("root");
-  ReactDOM.render(<Input />, root);
+  ReactDOM.render(
+    <Router>
+      <Route path="/" component={Edit} />  
+    </Router>, root);
 });

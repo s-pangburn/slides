@@ -24,7 +24,7 @@ textarea:focus {
 input[type="text"], textarea {
   background-color: #333333;
   color: lightgrey;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .input-container {
