@@ -1,10 +1,21 @@
 import React from 'react';
 
-const Presentation extends React.Component {
+class Presentation extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { currentSlide: 0 };
+  }
+
+  rawMarkup() {
+    return { __html: this.props.md.render(this.props.slides[this.state.currentSlide]) };
+  }
+
   render() {
+    debugger;
     return (
-      <div>
-        hi
+      <div className="present-container">
+        <div className="present-slide" dangerouslySetInnerHTML={this.rawMarkup()}/>
       </div>
     );
   }

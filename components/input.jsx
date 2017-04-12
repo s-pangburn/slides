@@ -42,9 +42,10 @@ class Edit extends React.Component {
   constructor() {
     super();
     this._updateText = this._updateText.bind(this);
+    this._togglePresent = this._togglePresent.bind(this);
     this.rawMarkup = this.rawMarkup.bind(this);
 
-    this.state = { slides: [], currentSlide: 0 };
+    this.state = { slides: [], currentSlide: 0, present: false };
   }
 
   _updateText(e) {
@@ -67,6 +68,12 @@ class Edit extends React.Component {
     }
   }
 
+  _togglePresent(e) {
+    e.preventDefault();
+
+    this.setState({ present: !this.state.present });
+  }
+
   rawMarkup() {
     return { __html: md.render(this.state.slides[this.state.currentSlide]) };
   }
@@ -74,18 +81,19 @@ class Edit extends React.Component {
   render() {
     let content;
 
-    if(this.props.location.pathname.slice(1) === "") {
+    //if(this.props.location.pathname.slice(1) === "") {
+    if(!this.state.present) {
       content = (
         <div className="input-container">
           <textarea onChange={this._updateText} onClick={this._updateText}/>
-          <Link to="/present" target="_blank" component={Presentation}>Present</Link>
+          <div onClick={this._togglePresent}>Toggle Present</div>
           <div className="render-container">
             <div className="render-preview" dangerouslySetInnerHTML={this.rawMarkup()}/>
           </div>
         </div>
       );
     } else {  
-      content = <Presentation slides={slides} />; 
+      content = <Presentation slides={this.state.slides} md={md} />; 
     }
     
     return content;
@@ -94,3 +102,4 @@ class Edit extends React.Component {
 
 export default Edit;
 
+  //<Link to="/present" target="_blank" component={Presentation}>Present</Link>

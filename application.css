@@ -48,3 +48,17 @@ input[type="text"], textarea {
   justify-content: center;
   height: 550px;
 }
+
+.present-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: lightgrey;
+}
+
+.present-slide {
+  margin-left: auto;
+  margin-right: auto;
+  height: 550px;
+}
