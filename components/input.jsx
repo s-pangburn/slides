@@ -1,6 +1,8 @@
 import React from 'react';
 import Remarkable from 'remarkable';
 const hljs = require('highlightjs');
+import { Link } from 'react-router-dom';
+import Presentation from './presentation';
 
 const md = new Remarkable({
   html:         false,        // Enable HTML tags in source
@@ -76,13 +78,14 @@ class Edit extends React.Component {
       content = (
         <div className="input-container">
           <textarea onChange={this._updateText} onClick={this._updateText}/>
+          <Link to="/present" target="_blank" component={Presentation}>Present</Link>
           <div className="render-container">
             <div className="render-preview" dangerouslySetInnerHTML={this.rawMarkup()}/>
           </div>
         </div>
       );
     } else {  
-      content = <div>presentation</div>;
+      content = <Presentation slides={slides} />; 
     }
     
     return content;
