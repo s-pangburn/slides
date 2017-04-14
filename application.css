@@ -36,7 +36,7 @@ textarea {
   width: 45%;
   height: 100%;
   border: none;
-  border-right: 2px solid rgba(100,149,237, .7);
+  border-right: 2px solid darkseagreen;
   padding: 20px;
   box-sizing: border-box;
 }
@@ -94,7 +94,12 @@ pre {
   font-size: 18px;
 }
 
-
+.present-progress {
+  position: absolute;
+  bottom: 0;
+  height: 5px;
+  background-color: darkseagreen;
+}
 
 
 
