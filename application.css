@@ -3,18 +3,42 @@ html, body, #root, .input-container {
   height: 100%;
   padding: 0;
   margin: 0;
+  font-family: 'Open Sans', san-serif;
 }
 
 body {
   background-color: #333333;
 }
 
+h1, h2, h3, h4 {
+  margin: 15px auto 15px auto;
+}
+
+p {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ul code, p code {
+  padding: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(129,136,150,.2);
+  border-radius: 3px;
+}
+
 textarea {
   width: 45%;
   height: 100%;
   border: none;
-  border-right: 1px solid cornflowerblue;
-  padding: 20px 20px 20px 0;
+  border-right: 2px solid rgba(100,149,237, .7);
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 textarea:focus {
@@ -24,7 +48,7 @@ textarea:focus {
 input[type="text"], textarea {
   background-color: #333333;
   color: lightgrey;
-  font-size: 14px;
+  font-size: 18px;
 }
 
 .input-container {
@@ -47,6 +71,7 @@ input[type="text"], textarea {
   flex-direction: column;
   justify-content: center;
   height: 550px;
+  font-size: 24px;
 }
 
 .present-container {
@@ -60,5 +85,16 @@ input[type="text"], textarea {
 .present-slide {
   margin-left: auto;
   margin-right: auto;
-  height: 550px;
+  min-width: 40%;;
+  max-width: 70%;
 }
+
+pre {
+  font-family: monospace;
+  font-size: 18px;
+}
+
+
+
+
+

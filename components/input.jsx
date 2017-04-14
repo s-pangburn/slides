@@ -85,7 +85,7 @@ class Edit extends React.Component {
     if(!this.state.present) {
       content = (
         <div className="input-container">
-          <textarea onChange={this._updateText} onClick={this._updateText}/>
+          <textarea className="markdown" onChange={this._updateText} onClick={this._updateText}/>
           <div onClick={this._togglePresent}>Toggle Present</div>
           <div className="render-container">
             <div className="render-preview" dangerouslySetInnerHTML={this.rawMarkup()}/>
