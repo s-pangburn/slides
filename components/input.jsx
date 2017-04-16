@@ -44,13 +44,20 @@ class Edit extends React.Component {
     this._updateText = this._updateText.bind(this);
     this._togglePresent = this._togglePresent.bind(this);
     this.rawMarkup = this.rawMarkup.bind(this);
+    this._resetInput = this._resetInput.bind(this);
 
-    this.state = { slides: [], currentSlide: 0, present: false };
+    const input = window.localStorage.input || "";
+    const slides = input.split("---");
+    this.state = { input, slides, currentSlide: 0, present: false };
   }
 
   _updateText(e) {
     e.preventDefault();
-    this.setState({ slides: e.currentTarget.value.split("---") }, this._updateCurrentSlide);
+
+    window.localStorage.input = e.currentTarget.value;
+    this.setState({ 
+      input: e.currentTarget.value, 
+      slides: e.currentTarget.value.split("---") }, this._updateCurrentSlide);
   }
 
   _updateCurrentSlide() {
@@ -62,7 +69,7 @@ class Edit extends React.Component {
         this.setState({ currentSlide: i });
         return;
       } else {
-        // adding 3 to account for '---' lost in split
+        // add 3 to account for '---' lost in split
         charCount += (this.state.slides[i].length + 3);
       }
     }
@@ -78,17 +85,24 @@ class Edit extends React.Component {
     return { __html: md.render(this.state.slides[this.state.currentSlide]) };
   }
 
+  _resetInput(e) {
+    e.preventDefault();
+
+    window.localStorage.clear();
+    this.setState({ input: "", slides: [], currentSlide: 0 });
+  }
+
   render() {
     let content;
 
-    //if(this.props.location.pathname.slice(1) === "") {
     if(!this.state.present) {
       content = (
         <div className="input-container">
           <header>
-            <div onClick={this._togglePresent}>Toggle Present</div>
+            <i className="fa fa-trash-o" onClick={this._resetInput} aria-hidden="true"></i>
+            <div className="header" onClick={this._togglePresent}>Present</div>
           </header>
-          <textarea className="markdown" onChange={this._updateText} onClick={this._updateText}/>
+          <textarea className="markdown" value={this.state.input} onChange={this._updateText} onClick={this._updateText}/>
           <div className="render-container">
             <div className="render-preview" dangerouslySetInnerHTML={this.rawMarkup()}/>
           </div>
