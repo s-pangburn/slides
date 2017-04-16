@@ -33,11 +33,12 @@ ul code, p code {
 }
 
 textarea {
-  width: 45%;
+  width: 50%;
   height: 100%;
   border: none;
   border-right: 2px solid darkseagreen;
   padding: 20px;
+  margin-top: 30px;
   box-sizing: border-box;
 }
 
@@ -51,17 +52,34 @@ input[type="text"], textarea {
   font-size: 18px;
 }
 
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 30px;
+  background-color: rgba(105,105,105, .7);
+  border-right: 2px solid darkseagreen;
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+}
+
 .input-container {
   display: flex;
   justify-content: space-around;
 }
 
 .render-container {
-  width: 45%;
+  width: 50%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  box-sizing: border-box;
+  padding: 40px;
 }
 
 .render-preview {
