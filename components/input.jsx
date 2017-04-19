@@ -125,9 +125,9 @@ const demoText = `
 * Or, use multi-line code blocks with automatic syntax highlighting:
 
 \`\`\`js
-  for(let i = 0; i < 10; i++) {
-    console.log('hello world!');
-  }
+for(let i = 0; i < 10; i++) {
+  console.log('hello world!');
+}
 \`\`\`
 
 ---
@@ -141,9 +141,9 @@ const demoText = `
 
 --- 
 
-# Slide 2
+# Real-Time Preview
 
-#### Click around input area to see slide render 
+#### Click around to see selected slide render 
 `;
 
 export default Edit;

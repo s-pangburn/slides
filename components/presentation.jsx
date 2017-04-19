@@ -52,7 +52,7 @@ class Presentation extends React.Component {
     return (
       <div className="present-container"> 
         <ReactCSSTransitionReplace 
-          className="present-slide render-preview"
+          className="present-replace-container"
           transitionName="fade-wait"
           transitionEnterTimeout={300}
           transitionLeaveTimeout={300}>

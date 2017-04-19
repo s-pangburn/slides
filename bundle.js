@@ -15955,7 +15955,7 @@ var md = new _remarkable2.default({
   }
 });
 
-var demoText = '\n# Markdown Slides \n\n---\n\n# Code Snippets And Blocks \n\n* Supports single line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\n  for(let i = 0; i < 10; i++) {\n    console.log(\'hello world!\');\n  }\n```\n\n---\n\n# Presenting \n\n* Click \'Present\' in navbar \n  * Use arrow keys to navigate through slides\n  * Press `escape` to switch back to \'edit\' mode\n* Slides will be persisted even if you navigate away from site\n\n--- \n\n# Slide 2\n\n#### Click around input area to see slide render \n';
+var demoText = '\n# Markdown Slides \n\n---\n\n# Code Snippets And Blocks \n\n* Supports single line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\nfor(let i = 0; i < 10; i++) {\n  console.log(\'hello world!\');\n}\n```\n\n---\n\n# Presenting \n\n* Click \'Present\' in navbar \n  * Use arrow keys to navigate through slides\n  * Press `escape` to switch back to \'edit\' mode\n* Slides will be persisted even if you navigate away from site\n\n--- \n\n# Real-Time Preview\n\n#### Click around to see selected slide render \n';
 
 exports.default = Edit;
 
@@ -18419,7 +18419,7 @@ var Presentation = function (_React$Component) {
         _react2.default.createElement(
           _reactCssTransitionReplace2.default,
           {
-            className: 'present-slide render-preview',
+            className: 'present-replace-container',
             transitionName: 'fade-wait',
             transitionEnterTimeout: 300,
             transitionLeaveTimeout: 300 },

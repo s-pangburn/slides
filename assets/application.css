@@ -100,11 +100,11 @@ div.header {
 }
 
 .render-preview {
-  //outline: solid black 1px;
   color: lightgrey;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   height: 550px;
   font-size: 24px;
 }
@@ -117,11 +117,21 @@ div.header {
   color: lightgrey;
 }
 
-.present-slide {
+.present-slide, .present-replace-container {
   margin-left: auto;
   margin-right: auto;
-  min-width: 40%;;
-  max-width: 70%;
+}
+
+.present-replace-container {
+  min-width: 40%;
+  max-width: 50%;
+}
+
+.present-replace-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 pre {
@@ -129,6 +139,8 @@ pre {
   font-size: 18px;
   margin: 15px;
   padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .progressbar-progress {

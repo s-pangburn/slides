@@ -1,5 +1,4 @@
-node_modules/*
-!node_modules/highlightjs/styles/atom-one-dark.css 
+node_modules
 
 *.swp
 
