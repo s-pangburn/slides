@@ -52,7 +52,7 @@ ul code, p code, pre {
 .cm-s-base16-dark .CodeMirror-gutters { background: #333333; }
 .cm-s-base16-dark span.cm-variable-2 { color: darkred; }
 .cm-s-base16-dark .CodeMirror-cursor { border-left: 1px solid black; }
-.cm-s-base16-dark div.CodeMirror-selected { background: blanchedalmond; }
+.cm-s-base16-dark div.CodeMirror-selected { background: white; }
 .cm-s-base16-dark span.cm-comment { color: black; }
 
 textarea:focus {

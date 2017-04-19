@@ -14,24 +14,34 @@ class Edit extends React.Component {
     this.togglePresent = this.togglePresent.bind(this);
     this.rawMarkup = this.rawMarkup.bind(this);
     this.resetInput = this.resetInput.bind(this);
+    this.updateCurrentSlide = this.updateCurrentSlide.bind(this);
+    this.indexOfCursorLocation = this.indexOfCursorLocation.bind(this);
+    this.addClickListener = this.addClickListener.bind(this);
 
     const input = window.localStorage.input || demoText;
     const slides = input.split("---");
     this.state = { input, slides, currentSlide: 0, present: false };
   }
 
-  updateText(e) {
-    e.preventDefault();
+  componentDidMount() {
+    this.addClickListener();
+  }
 
-    window.localStorage.input = e.currentTarget.value;
+  addClickListener() {
+    const cm = document.querySelector(".ReactCodeMirror");
+    cm.addEventListener("click", this.updateCurrentSlide);
+  }
+
+  updateText(input) {
+    window.localStorage.input = input;
     this.setState({ 
-      input: e.currentTarget.value, 
-      slides: e.currentTarget.value.split("---") }, this.updateCurrentSlide);
+      input, 
+      slides: input.split("---") }, this.updateCurrentSlide);
   }
 
   updateCurrentSlide() {
-    const cursorLocation = document.querySelector('textarea').selectionEnd;
     let charCount = 0;
+    const cursorLocation = this.indexOfCursorLocation(); 
 
     for(let i = 0; i < this.state.slides.length; i++) {
       if(cursorLocation <= (charCount + this.state.slides[i].length)) {
@@ -44,10 +54,32 @@ class Edit extends React.Component {
     }
   }
 
+  indexOfCursorLocation() {
+    const cm = this.refs.editor.codeMirror;
+    const lines = cm.lineCount();
+    const cursorPos = cm.getCursor();
+    let pos = 0;
+
+    for(let i = 0; i < lines; i++) {
+      let len = cm.getLine(i).length + 1;
+      if(i === cursorPos.line) {
+        pos += cursorPos.ch;
+        break;
+      }
+      pos += len;
+    }
+
+    return pos;
+  }
+
   togglePresent(e) {
     e.preventDefault();
-
-    this.setState({ present: !this.state.present });
+    
+    this.setState({ present: !this.state.present }, () => {
+      if(!this.state.present) {
+        this.addClickListener();
+      }
+    });
   }
 
   rawMarkup() {
@@ -72,7 +104,7 @@ class Edit extends React.Component {
             <div className="header" onClick={this.togglePresent}>Present</div>
           </header>
           <div className="codemirror-container" >
-            <CodeMirror value={this.state.input} onChange={this.updateText} onClick={this.updateText} options={{ theme: 'base16-dark', lineNumbers: true, mode: 'markdown', autoSave: true, tabSize: 2, lineWrapping: true }}/>
+            <CodeMirror ref="editor" value={this.state.input} onChange={this.updateText} onMouseDown={this.updateText} options={{ theme: 'base16-dark', lineNumbers: true, mode: 'markdown', autoSave: true, tabSize: 2, lineWrapping: true }}/>
           </div>
           <div className="render-container">
             <div className="render-preview" dangerouslySetInnerHTML={this.rawMarkup()}/>
