@@ -10,7 +10,7 @@ body {
 }
 
 h1, h2, h3, h4 {
-  margin: 15px auto 15px auto;
+  margin: 15px auto 30px auto;
 }
 
 p {
@@ -23,7 +23,7 @@ ul {
   margin-bottom: 0;
 }
 
-ul code, p code {
+ul code, p code, pre {
   padding: 0.2em;
   margin: 0;
   font-size: 85%;
@@ -64,6 +64,7 @@ header {
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 img {
@@ -72,6 +73,15 @@ img {
 
 div.header {
   display: inline;
+}
+
+.fa-trash-o, div.header {
+  margin: 0 20px;
+}
+
+.fa-trash-o:hover, div.header:hover {
+  color: lightgrey;
+  cursor: pointer;
 }
 
 .input-container {
@@ -117,6 +127,8 @@ div.header {
 pre {
   font-family: monospace;
   font-size: 18px;
+  margin: 15px;
+  padding: 10px;
 }
 
 .progressbar-progress {

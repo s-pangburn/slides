@@ -5,14 +5,14 @@ import Progress from 'react-progressbar';
 class Presentation extends React.Component {
   constructor(props) {
     super(props);
-    this._toggleSlide = this._toggleSlide.bind(this);
     const slides = this.generateSlides();
+    this.toggleSlide = this.toggleSlide.bind(this);
 
     this.state = { currentSlide: 0, slides };
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', this._toggleSlide);
+    document.addEventListener('keydown', this.toggleSlide);
   }
 
   generateSlides() {
@@ -31,7 +31,7 @@ class Presentation extends React.Component {
     return { __html: this.props.md.render(this.props.slides[this.state.currentSlide]) };
   }
 
-  _toggleSlide(e) {
+  toggleSlide(e) {
     const currentSlide = this.state.currentSlide;
     
     if(e.key === "ArrowRight" && currentSlide < this.props.slides.length - 1) {
