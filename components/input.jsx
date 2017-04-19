@@ -109,7 +109,7 @@ class Edit extends React.Component {
         </div>
       );
     } else {  
-      content = <Presentation slides={this.state.slides} md={md} />; 
+      content = <Presentation slides={this.state.slides} md={md} togglePresent={this._togglePresent}/>; 
     }
     
     return content;

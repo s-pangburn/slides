@@ -1,4 +1,3 @@
-
 html, body, #root, .input-container {
   height: 100%;
   padding: 0;
@@ -120,12 +119,33 @@ pre {
   font-size: 18px;
 }
 
-.present-progress {
+.progressbar-progress {
   position: absolute;
   bottom: 0;
   height: 5px;
   background-color: darkseagreen;
 }
 
+.fade-wait-leave {
+  opacity: 1;
+}
 
+.fade-wait-leave.fade-wait-leave-active {
+  opacity: 0;
+  transition: opacity .3s ease-in;
+}
+
+.fade-wait-enter {
+  opacity: 0;
+}
+
+.fade-wait-enter.fade-wait-enter-active {
+  opacity: 1;
+  /* Delay the enter animation until the leave completes */
+  transition: opacity .3s ease-in .5s;
+}
+
+.fade-wait-height {
+  transition: height .3s ease-in-out;
+}
 
