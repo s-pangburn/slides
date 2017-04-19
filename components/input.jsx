@@ -3,6 +3,9 @@ import Remarkable from 'remarkable';
 import hljs from 'highlightjs';
 import { Link } from 'react-router-dom';
 import Presentation from './presentation';
+//import CodeMirror from 'react-codemirror';
+const CodeMirror = require('react-codemirror');
+require('codemirror/mode/markdown/markdown');
 
 class Edit extends React.Component {
   constructor() {
@@ -68,7 +71,9 @@ class Edit extends React.Component {
             <i className="fa fa-trash-o" onClick={this.resetInput} aria-hidden="true"></i>
             <div className="header" onClick={this.togglePresent}>Present</div>
           </header>
-          <textarea className="markdown" value={this.state.input} onChange={this.updateText} onClick={this.updateText}/>
+          <div className="codemirror-container" >
+            <CodeMirror value={this.state.input} onChange={this.updateText} onClick={this.updateText} options={{ lineNumbers: true, mode: 'markdown', autoSave: true, tabSize: 2, lineWrapping: true }}/>
+          </div>
           <div className="render-container">
             <div className="render-preview" dangerouslySetInnerHTML={this.rawMarkup()}/>
           </div>
