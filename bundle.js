@@ -15803,6 +15803,10 @@ var _remarkable = __webpack_require__(243);
 
 var _remarkable2 = _interopRequireDefault(_remarkable);
 
+var _highlightjs = __webpack_require__(133);
+
+var _highlightjs2 = _interopRequireDefault(_highlightjs);
+
 var _reactRouterDom = __webpack_require__(67);
 
 var _presentation = __webpack_require__(117);
@@ -15817,8 +15821,107 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var hljs = __webpack_require__(133);
+var Edit = function (_React$Component) {
+  _inherits(Edit, _React$Component);
 
+  function Edit() {
+    _classCallCheck(this, Edit);
+
+    var _this = _possibleConstructorReturn(this, (Edit.__proto__ || Object.getPrototypeOf(Edit)).call(this));
+
+    _this.updateText = _this.updateText.bind(_this);
+    _this.togglePresent = _this.togglePresent.bind(_this);
+    _this.rawMarkup = _this.rawMarkup.bind(_this);
+    _this.resetInput = _this.resetInput.bind(_this);
+
+    var input = window.localStorage.input || demoText;
+    var slides = input.split("---");
+    _this.state = { input: input, slides: slides, currentSlide: 0, present: false };
+    return _this;
+  }
+
+  _createClass(Edit, [{
+    key: 'updateText',
+    value: function updateText(e) {
+      e.preventDefault();
+
+      window.localStorage.input = e.currentTarget.value;
+      this.setState({
+        input: e.currentTarget.value,
+        slides: e.currentTarget.value.split("---") }, this.updateCurrentSlide);
+    }
+  }, {
+    key: 'updateCurrentSlide',
+    value: function updateCurrentSlide() {
+      var cursorLocation = document.querySelector('textarea').selectionEnd;
+      var charCount = 0;
+
+      for (var i = 0; i < this.state.slides.length; i++) {
+        if (cursorLocation <= charCount + this.state.slides[i].length) {
+          this.setState({ currentSlide: i });
+          return;
+        } else {
+          // add 3 to account for '---' lost in split
+          charCount += this.state.slides[i].length + 3;
+        }
+      }
+    }
+  }, {
+    key: 'togglePresent',
+    value: function togglePresent(e) {
+      e.preventDefault();
+
+      this.setState({ present: !this.state.present });
+    }
+  }, {
+    key: 'rawMarkup',
+    value: function rawMarkup() {
+      return { __html: md.render(this.state.slides[this.state.currentSlide]) };
+    }
+  }, {
+    key: 'resetInput',
+    value: function resetInput(e) {
+      e.preventDefault();
+
+      window.localStorage.clear();
+      this.setState({ input: "", slides: [], currentSlide: 0 });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var content = void 0;
+
+      if (!this.state.present) {
+        content = _react2.default.createElement(
+          'div',
+          { className: 'input-container' },
+          _react2.default.createElement(
+            'header',
+            null,
+            _react2.default.createElement('i', { className: 'fa fa-trash-o', onClick: this.resetInput, 'aria-hidden': 'true' }),
+            _react2.default.createElement(
+              'div',
+              { className: 'header', onClick: this.togglePresent },
+              'Present'
+            )
+          ),
+          _react2.default.createElement('textarea', { className: 'markdown', value: this.state.input, onChange: this.updateText, onClick: this.updateText }),
+          _react2.default.createElement(
+            'div',
+            { className: 'render-container' },
+            _react2.default.createElement('div', { className: 'render-preview', dangerouslySetInnerHTML: this.rawMarkup() })
+          )
+        );
+      } else {
+        content = _react2.default.createElement(_presentation2.default, { slides: this.state.slides, md: md, togglePresent: this.togglePresent });
+      }
+
+      return content;
+    }
+  }]);
+
+  return Edit;
+}(_react2.default.Component);
 
 var md = new _remarkable2.default({
   html: false, // Enable HTML tags in source
@@ -15838,125 +15941,23 @@ var md = new _remarkable2.default({
   // Highlighter function. Should return escaped HTML,
   // or '' if input not changed
   highlight: function highlight(str, lang) {
-    if (lang && hljs.getLanguage(lang)) {
+    if (lang && _highlightjs2.default.getLanguage(lang)) {
       try {
-        return hljs.highlight(lang, str).value;
+        return _highlightjs2.default.highlight(lang, str).value;
       } catch (__) {}
     }
 
     try {
-      return hljs.highlightAuto(str).value;
+      return _highlightjs2.default.highlightAuto(str).value;
     } catch (__) {}
 
     return ''; // use external default escaping
   }
 });
 
-var Edit = function (_React$Component) {
-  _inherits(Edit, _React$Component);
-
-  function Edit() {
-    _classCallCheck(this, Edit);
-
-    var _this = _possibleConstructorReturn(this, (Edit.__proto__ || Object.getPrototypeOf(Edit)).call(this));
-
-    _this._updateText = _this._updateText.bind(_this);
-    _this._togglePresent = _this._togglePresent.bind(_this);
-    _this.rawMarkup = _this.rawMarkup.bind(_this);
-    _this._resetInput = _this._resetInput.bind(_this);
-
-    var input = window.localStorage.input || "";
-    var slides = input.split("---");
-    _this.state = { input: input, slides: slides, currentSlide: 0, present: false };
-    return _this;
-  }
-
-  _createClass(Edit, [{
-    key: '_updateText',
-    value: function _updateText(e) {
-      e.preventDefault();
-
-      window.localStorage.input = e.currentTarget.value;
-      this.setState({
-        input: e.currentTarget.value,
-        slides: e.currentTarget.value.split("---") }, this._updateCurrentSlide);
-    }
-  }, {
-    key: '_updateCurrentSlide',
-    value: function _updateCurrentSlide() {
-      var cursorLocation = document.querySelector('textarea').selectionEnd;
-      var charCount = 0;
-
-      for (var i = 0; i < this.state.slides.length; i++) {
-        if (cursorLocation <= charCount + this.state.slides[i].length) {
-          this.setState({ currentSlide: i });
-          return;
-        } else {
-          // add 3 to account for '---' lost in split
-          charCount += this.state.slides[i].length + 3;
-        }
-      }
-    }
-  }, {
-    key: '_togglePresent',
-    value: function _togglePresent(e) {
-      e.preventDefault();
-
-      this.setState({ present: !this.state.present });
-    }
-  }, {
-    key: 'rawMarkup',
-    value: function rawMarkup() {
-      return { __html: md.render(this.state.slides[this.state.currentSlide]) };
-    }
-  }, {
-    key: '_resetInput',
-    value: function _resetInput(e) {
-      e.preventDefault();
-
-      window.localStorage.clear();
-      this.setState({ input: "", slides: [], currentSlide: 0 });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var content = void 0;
-
-      if (!this.state.present) {
-        content = _react2.default.createElement(
-          'div',
-          { className: 'input-container' },
-          _react2.default.createElement(
-            'header',
-            null,
-            _react2.default.createElement('i', { className: 'fa fa-trash-o', onClick: this._resetInput, 'aria-hidden': 'true' }),
-            _react2.default.createElement(
-              'div',
-              { className: 'header', onClick: this._togglePresent },
-              'Present'
-            )
-          ),
-          _react2.default.createElement('textarea', { className: 'markdown', value: this.state.input, onChange: this._updateText, onClick: this._updateText }),
-          _react2.default.createElement(
-            'div',
-            { className: 'render-container' },
-            _react2.default.createElement('div', { className: 'render-preview', dangerouslySetInnerHTML: this.rawMarkup() })
-          )
-        );
-      } else {
-        content = _react2.default.createElement(_presentation2.default, { slides: this.state.slides, md: md, togglePresent: this._togglePresent });
-      }
-
-      return content;
-    }
-  }]);
-
-  return Edit;
-}(_react2.default.Component);
+var demoText = '\n# Markdown Slides \n\n---\n\n# Code Snippets And Blocks \n\n* Supports single line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\n  for(let i = 0; i < 10; i++) {\n    console.log(\'hello world!\');\n  }\n```\n\n---\n\n# Presenting \n\n* Click \'Present\' in navbar \n  * Use arrow keys to navigate through slides\n  * Press `escape` to switch back to \'edit\' mode\n* Slides will be persisted even if you navigate away from site\n\n--- \n\n# Slide 2\n\n#### Click around input area to see slide render \n';
 
 exports.default = Edit;
-
-//<Link to="/present" target="_blank" component={Presentation}>Present</Link>
 
 /***/ }),
 /* 115 */
@@ -18361,8 +18362,8 @@ var Presentation = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Presentation.__proto__ || Object.getPrototypeOf(Presentation)).call(this, props));
 
-    _this._toggleSlide = _this._toggleSlide.bind(_this);
     var slides = _this.generateSlides();
+    _this.toggleSlide = _this.toggleSlide.bind(_this);
 
     _this.state = { currentSlide: 0, slides: slides };
     return _this;
@@ -18371,7 +18372,7 @@ var Presentation = function (_React$Component) {
   _createClass(Presentation, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      document.addEventListener('keydown', this._toggleSlide);
+      document.addEventListener('keydown', this.toggleSlide);
     }
   }, {
     key: 'generateSlides',
@@ -18392,8 +18393,8 @@ var Presentation = function (_React$Component) {
       return { __html: this.props.md.render(this.props.slides[this.state.currentSlide]) };
     }
   }, {
-    key: '_toggleSlide',
-    value: function _toggleSlide(e) {
+    key: 'toggleSlide',
+    value: function toggleSlide(e) {
       var currentSlide = this.state.currentSlide;
 
       if (e.key === "ArrowRight" && currentSlide < this.props.slides.length - 1) {
