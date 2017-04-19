@@ -1,5 +1,8 @@
-node_modules 
+node_modules/*
+!node_modules/highlightjs/styles/atom-one-dark.css 
 
 *.swp
 
 .DS_Store
+
+
