@@ -31,18 +31,6 @@ ul code, p code, pre {
   border-radius: 3px;
 }
 
-textarea {
-  width: 50%;
-  max-height: 100%;
-  overflow-y: scroll;
-  border: none;
-  border-right: 2px solid darkseagreen;
-  padding: 20px;
-  margin-top: 30px;
-  box-sizing: border-box;
-  resize: none;
-}
-
 .codemirror-container {
   margin-top: 30px;
   width: 50%;
@@ -51,7 +39,21 @@ textarea {
 
 .ReactCodeMirror, .CodeMirror {
   height: 100%;
+  background-color: lightgrey;
+  border-right: 1px solid darkseagreen;
 }
+
+.cm-s-base16-dark.CodeMirror, span.cm-bracket {
+  background: lightgrey;
+  color: darkblue;
+}
+
+.cm-s-base16-dark .CodeMirror-linenumber { color: lightgrey; } 
+.cm-s-base16-dark .CodeMirror-gutters { background: #333333; }
+.cm-s-base16-dark span.cm-variable-2 { color: darkred; }
+.cm-s-base16-dark .CodeMirror-cursor { border-left: 1px solid black; }
+.cm-s-base16-dark div.CodeMirror-selected { background: blanchedalmond; }
+.cm-s-base16-dark span.cm-comment { color: black; }
 
 textarea:focus {
   outline: 0;

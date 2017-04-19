@@ -72,7 +72,7 @@ class Edit extends React.Component {
             <div className="header" onClick={this.togglePresent}>Present</div>
           </header>
           <div className="codemirror-container" >
-            <CodeMirror value={this.state.input} onChange={this.updateText} onClick={this.updateText} options={{ lineNumbers: true, mode: 'markdown', autoSave: true, tabSize: 2, lineWrapping: true }}/>
+            <CodeMirror value={this.state.input} onChange={this.updateText} onClick={this.updateText} options={{ theme: 'base16-dark', lineNumbers: true, mode: 'markdown', autoSave: true, tabSize: 2, lineWrapping: true }}/>
           </div>
           <div className="render-container">
             <div className="render-preview" dangerouslySetInnerHTML={this.rawMarkup()}/>
