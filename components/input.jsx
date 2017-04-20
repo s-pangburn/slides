@@ -3,7 +3,6 @@ import Remarkable from 'remarkable';
 import hljs from 'highlightjs';
 import { Link } from 'react-router-dom';
 import Presentation from './presentation';
-//import CodeMirror from 'react-codemirror';
 const CodeMirror = require('react-codemirror');
 require('codemirror/mode/markdown/markdown');
 
@@ -93,6 +92,10 @@ class Edit extends React.Component {
     this.setState({ input: "", slides: [], currentSlide: 0 });
   }
 
+  isPresenting() {
+    return this.state.present;
+  }
+
   render() {
     let content;
 
@@ -112,7 +115,7 @@ class Edit extends React.Component {
         </div>
       );
     } else {  
-      content = <Presentation slides={this.state.slides} md={md} togglePresent={this.togglePresent}/>; 
+      content = <Presentation slides={this.state.slides} md={md} togglePresent={this.togglePresent} presenting={this.isPresenting.bind(this)}/>; 
     }
     
     return content;

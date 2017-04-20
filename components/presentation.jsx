@@ -33,8 +33,10 @@ class Presentation extends React.Component {
 
   toggleSlide(e) {
     const currentSlide = this.state.currentSlide;
-    
-    if(e.key === "ArrowRight" && currentSlide < this.props.slides.length - 1) {
+
+    if(!this.props.presenting()) {
+      return;
+    } else if(e.key === "ArrowRight" && currentSlide < this.props.slides.length - 1) {
       e.preventDefault();
       this.setState({ currentSlide: currentSlide + 1 });
     } else if(e.key === "ArrowLeft" && currentSlide > 0) {

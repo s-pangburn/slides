@@ -25132,7 +25132,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-//import CodeMirror from 'react-codemirror';
 var CodeMirror = __webpack_require__(148);
 __webpack_require__(120);
 
@@ -25239,6 +25238,11 @@ var Edit = function (_React$Component) {
       this.setState({ input: "", slides: [], currentSlide: 0 });
     }
   }, {
+    key: 'isPresenting',
+    value: function isPresenting() {
+      return this.state.present;
+    }
+  }, {
     key: 'render',
     value: function render() {
       var content = void 0;
@@ -25269,7 +25273,7 @@ var Edit = function (_React$Component) {
           )
         );
       } else {
-        content = _react2.default.createElement(_presentation2.default, { slides: this.state.slides, md: md, togglePresent: this.togglePresent });
+        content = _react2.default.createElement(_presentation2.default, { slides: this.state.slides, md: md, togglePresent: this.togglePresent, presenting: this.isPresenting.bind(this) });
       }
 
       return content;
@@ -27753,7 +27757,9 @@ var Presentation = function (_React$Component) {
     value: function toggleSlide(e) {
       var currentSlide = this.state.currentSlide;
 
-      if (e.key === "ArrowRight" && currentSlide < this.props.slides.length - 1) {
+      if (!this.props.presenting()) {
+        return;
+      } else if (e.key === "ArrowRight" && currentSlide < this.props.slides.length - 1) {
         e.preventDefault();
         this.setState({ currentSlide: currentSlide + 1 });
       } else if (e.key === "ArrowLeft" && currentSlide > 0) {
