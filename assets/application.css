@@ -2,7 +2,7 @@ html, body, #root, .input-container {
   height: 100%;
   padding: 0;
   margin: 0;
-  font-family: 'Open Sans', san-serif;
+  font-family: 'Lato', san-serif;
 }
 
 body {
@@ -23,12 +23,25 @@ ul {
   margin-bottom: 0;
 }
 
+li {
+  line-height: 1.5;
+}
+
 ul code, p code, pre {
   padding: 0.2em;
   margin: 0;
   font-size: 85%;
   background-color: rgba(129,136,150,.2);
   border-radius: 3px;
+}
+
+strong, b {
+  letter-spacing: 1px;
+}
+
+a, a:visited {
+  color: cadetblue;
+  text-decoration: none;
 }
 
 .codemirror-container {
