@@ -7,6 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("root");
   ReactDOM.render(
     <Router>
-      <Route path="/" component={Edit} />  
+      <Route path="/" component={Edit} />
     </Router>, root);
 });

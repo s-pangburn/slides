@@ -16,6 +16,9 @@ class Edit extends React.Component {
     this.updateCurrentSlide = this.updateCurrentSlide.bind(this);
     this.indexOfCursorLocation = this.indexOfCursorLocation.bind(this);
     this.addClickListener = this.addClickListener.bind(this);
+    this.slideRight = this.slideRight.bind(this);
+    this.slideLeft = this.slideLeft.bind(this);
+    this.handleArrowKey = this.handleArrowKey.bind(this);
 
     const input = window.localStorage.input || demoText;
     const slides = input.split("---");
@@ -33,14 +36,14 @@ class Edit extends React.Component {
 
   updateText(input) {
     window.localStorage.input = input;
-    this.setState({ 
-      input, 
+    this.setState({
+      input,
       slides: input.split("---") }, this.updateCurrentSlide);
   }
 
   updateCurrentSlide() {
     let charCount = 0;
-    const cursorLocation = this.indexOfCursorLocation(); 
+    const cursorLocation = this.indexOfCursorLocation();
 
     for(let i = 0; i < this.state.slides.length; i++) {
       if(cursorLocation <= (charCount + this.state.slides[i].length)) {
@@ -51,6 +54,18 @@ class Edit extends React.Component {
         charCount += (this.state.slides[i].length + 3);
       }
     }
+  }
+
+  slideRight() {
+    let previousSlide = this.state.currentSlide;
+    const currentSlide = previousSlide < this.state.slides.length - 1 ? ++previousSlide : previousSlide
+    this.setState({ currentSlide });
+  }
+
+  slideLeft() {
+    let previousSlide = this.state.currentSlide;
+    const currentSlide = previousSlide > 0 ? --previousSlide : previousSlide
+    this.setState({ currentSlide });
   }
 
   indexOfCursorLocation() {
@@ -73,12 +88,24 @@ class Edit extends React.Component {
 
   togglePresent(e) {
     e.preventDefault();
-    
+
     this.setState({ present: !this.state.present }, () => {
       if(!this.state.present) {
         this.addClickListener();
       }
     });
+  }
+
+  handleArrowKey(e) {
+    e.preventDefault();
+
+    if(e.key === "ArrowRight") {
+      e.preventDefault();
+      this.slideRight();
+    } else if(e.key === "ArrowLeft") {
+      e.preventDefault();
+      this.slideLeft();
+    }
   }
 
   rawMarkup() {
@@ -103,21 +130,30 @@ class Edit extends React.Component {
       content = (
         <div className="input-container">
           <header>
-            <i className="fa fa-trash-o" onClick={this.resetInput} aria-hidden="true"></i>
+            <div>
+              <i className="fa fa-trash-o" onClick={this.resetInput} aria-hidden="true"></i>
+              <Link to="https://github.com/clairekrogers/slides">
+                <i className="fa fa-github" aria-hidden="true"></i>
+              </Link>
+            </div>
             <div className="header" onClick={this.togglePresent}>Present</div>
           </header>
           <div className="codemirror-container" >
             <CodeMirror ref="editor" value={this.state.input} onChange={this.updateText} onMouseDown={this.updateText} options={{ theme: 'base16-dark', lineNumbers: true, mode: 'markdown', autoSave: true, tabSize: 2, lineWrapping: true }}/>
           </div>
-          <div className="render-container">
+          <div className="render-container" onKeyDown={this.handleArrowKey} tabIndex="0">
             <div className="render-preview" dangerouslySetInnerHTML={this.rawMarkup()}/>
+            <div className="render-arrows">
+              <i className="fa fa-arrow-left" onClick={this.slideLeft} aria-hidden="true"></i>
+              <i className="fa fa-arrow-right" onClick={this.slideRight} aria-hidden="true"></i>
+            </div>
           </div>
         </div>
       );
-    } else {  
-      content = <Presentation slides={this.state.slides} md={md} togglePresent={this.togglePresent} presenting={this.isPresenting.bind(this)}/>; 
+    } else {
+      content = <Presentation slides={this.state.slides} md={md} togglePresent={this.togglePresent} presenting={this.isPresenting.bind(this)}/>;
     }
-    
+
     return content;
   }
 }
@@ -155,11 +191,11 @@ const md = new Remarkable({
 });
 
 const demoText = `
-# Markdown Slides 
+# Markdown Slides
 
 ---
 
-# Code Snippets And Blocks 
+# Code Snippets And Blocks
 
 * Supports single line code \`snippets\` with backticks
 * Or, use multi-line code blocks with automatic syntax highlighting:
@@ -172,18 +208,18 @@ for(let i = 0; i < 10; i++) {
 
 ---
 
-# Presenting 
+# Presenting
 
-* Click 'Present' in navbar 
+* Click 'Present' in navbar
   * Use arrow keys to navigate through slides
   * Press \`escape\` to switch back to 'edit' mode
 * Slides will be persisted even if you navigate away from site
 
---- 
+---
 
 # Real-Time Preview
 
-#### Click around to see selected slide render 
+#### Click around text editor to see selected slide render
 `;
 
 export default Edit;

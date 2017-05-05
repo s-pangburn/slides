@@ -12,6 +12,7 @@ class Presentation extends React.Component {
   }
 
   componentDidMount() {
+    console.log("listener added");
     document.addEventListener('keydown', this.toggleSlide);
   }
 
@@ -52,8 +53,8 @@ class Presentation extends React.Component {
     const progress = Math.round((this.state.currentSlide + 1) / this.props.slides.length * 100);
 
     return (
-      <div className="present-container"> 
-        <ReactCSSTransitionReplace 
+      <div className="present-container" onKeyDown={this.toggleSlide}>
+        <ReactCSSTransitionReplace
           className="present-replace-container"
           transitionName="fade-wait"
           transitionEnterTimeout={300}

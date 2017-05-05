@@ -52,21 +52,22 @@ a, a:visited {
 
 .ReactCodeMirror, .CodeMirror {
   height: 100%;
-  background-color: lightgrey;
+  background-color: whitesmoke;
   border-right: 1px solid darkseagreen;
 }
 
 .cm-s-base16-dark.CodeMirror, span.cm-bracket {
-  background: lightgrey;
+  background: whitesmoke;
   color: darkblue;
 }
 
-.cm-s-base16-dark .CodeMirror-linenumber { color: lightgrey; } 
+.cm-s-base16-dark .CodeMirror-linenumber { color: lightgrey; }
 .cm-s-base16-dark .CodeMirror-gutters { background: #333333; }
 .cm-s-base16-dark span.cm-variable-2 { color: darkred; }
 .cm-s-base16-dark .CodeMirror-cursor { border-left: 1px solid black; }
 .cm-s-base16-dark div.CodeMirror-selected { background: white; }
 .cm-s-base16-dark span.cm-comment { color: black; }
+.cm-s-base16-dark span.cm-string { color: lightseagreen; }
 
 textarea:focus {
   outline: 0;
@@ -199,3 +200,20 @@ pre {
   transition: height .3s ease-in-out;
 }
 
+.fa.fa-github {
+  font-size: 18px;
+  color: black;
+}
+
+.render-arrows {
+  display: flex;
+  justify-content: space-between;
+}
+
+.fa.fa-arrow-right, .fa.fa-arrow-left {
+  color: whitesmoke;
+}
+
+.fa.fa-arrow-right:hover, .fa.fa-arrow-left:hover {
+  cursor: pointer;
+}

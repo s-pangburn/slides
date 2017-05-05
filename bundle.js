@@ -25177,6 +25177,9 @@ var Edit = function (_React$Component) {
     _this.updateCurrentSlide = _this.updateCurrentSlide.bind(_this);
     _this.indexOfCursorLocation = _this.indexOfCursorLocation.bind(_this);
     _this.addClickListener = _this.addClickListener.bind(_this);
+    _this.slideRight = _this.slideRight.bind(_this);
+    _this.slideLeft = _this.slideLeft.bind(_this);
+    _this.handleArrowKey = _this.handleArrowKey.bind(_this);
 
     var input = window.localStorage.input || demoText;
     var slides = input.split("---");
@@ -25220,6 +25223,20 @@ var Edit = function (_React$Component) {
       }
     }
   }, {
+    key: 'slideRight',
+    value: function slideRight() {
+      var previousSlide = this.state.currentSlide;
+      var currentSlide = previousSlide < this.state.slides.length - 1 ? ++previousSlide : previousSlide;
+      this.setState({ currentSlide: currentSlide });
+    }
+  }, {
+    key: 'slideLeft',
+    value: function slideLeft() {
+      var previousSlide = this.state.currentSlide;
+      var currentSlide = previousSlide > 0 ? --previousSlide : previousSlide;
+      this.setState({ currentSlide: currentSlide });
+    }
+  }, {
     key: 'indexOfCursorLocation',
     value: function indexOfCursorLocation() {
       var cm = this.refs.editor.codeMirror;
@@ -25252,6 +25269,19 @@ var Edit = function (_React$Component) {
       });
     }
   }, {
+    key: 'handleArrowKey',
+    value: function handleArrowKey(e) {
+      e.preventDefault();
+
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        this.slideRight();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        this.slideLeft();
+      }
+    }
+  }, {
     key: 'rawMarkup',
     value: function rawMarkup() {
       return { __html: md.render(this.state.slides[this.state.currentSlide]) };
@@ -25281,7 +25311,16 @@ var Edit = function (_React$Component) {
           _react2.default.createElement(
             'header',
             null,
-            _react2.default.createElement('i', { className: 'fa fa-trash-o', onClick: this.resetInput, 'aria-hidden': 'true' }),
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement('i', { className: 'fa fa-trash-o', onClick: this.resetInput, 'aria-hidden': 'true' }),
+              _react2.default.createElement(
+                _reactRouterDom.Link,
+                { to: 'https://github.com/clairekrogers/slides' },
+                _react2.default.createElement('i', { className: 'fa fa-github', 'aria-hidden': 'true' })
+              )
+            ),
             _react2.default.createElement(
               'div',
               { className: 'header', onClick: this.togglePresent },
@@ -25295,8 +25334,14 @@ var Edit = function (_React$Component) {
           ),
           _react2.default.createElement(
             'div',
-            { className: 'render-container' },
-            _react2.default.createElement('div', { className: 'render-preview', dangerouslySetInnerHTML: this.rawMarkup() })
+            { className: 'render-container', onKeyDown: this.handleArrowKey, tabIndex: '0' },
+            _react2.default.createElement('div', { className: 'render-preview', dangerouslySetInnerHTML: this.rawMarkup() }),
+            _react2.default.createElement(
+              'div',
+              { className: 'render-arrows' },
+              _react2.default.createElement('i', { className: 'fa fa-arrow-left', onClick: this.slideLeft, 'aria-hidden': 'true' }),
+              _react2.default.createElement('i', { className: 'fa fa-arrow-right', onClick: this.slideRight, 'aria-hidden': 'true' })
+            )
           )
         );
       } else {
@@ -25342,7 +25387,7 @@ var md = new _remarkable2.default({
   }
 });
 
-var demoText = '\n# Markdown Slides \n\n---\n\n# Code Snippets And Blocks \n\n* Supports single line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\nfor(let i = 0; i < 10; i++) {\n  console.log(\'hello world!\');\n}\n```\n\n---\n\n# Presenting \n\n* Click \'Present\' in navbar \n  * Use arrow keys to navigate through slides\n  * Press `escape` to switch back to \'edit\' mode\n* Slides will be persisted even if you navigate away from site\n\n--- \n\n# Real-Time Preview\n\n#### Click around to see selected slide render \n';
+var demoText = '\n# Markdown Slides\n\n---\n\n# Code Snippets And Blocks\n\n* Supports single line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\nfor(let i = 0; i < 10; i++) {\n  console.log(\'hello world!\');\n}\n```\n\n---\n\n# Presenting\n\n* Click \'Present\' in navbar\n  * Use arrow keys to navigate through slides\n  * Press `escape` to switch back to \'edit\' mode\n* Slides will be persisted even if you navigate away from site\n\n---\n\n# Real-Time Preview\n\n#### Click around text editor to see selected slide render\n';
 
 exports.default = Edit;
 
@@ -27759,6 +27804,7 @@ var Presentation = function (_React$Component) {
   _createClass(Presentation, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      console.log("listener added");
       document.addEventListener('keydown', this.toggleSlide);
     }
   }, {
@@ -27804,7 +27850,7 @@ var Presentation = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'present-container' },
+        { className: 'present-container', onKeyDown: this.toggleSlide },
         _react2.default.createElement(
           _reactCssTransitionReplace2.default,
           {
