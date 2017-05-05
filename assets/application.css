@@ -28,7 +28,7 @@ li {
 }
 
 ul code, p code, pre {
-  padding: 0.2em;
+  padding: 0.5em 0.2em;
   margin: 0;
   font-size: 85%;
   background-color: rgba(129,136,150,.2);
@@ -151,7 +151,7 @@ div.header {
 
 .present-replace-container {
   min-width: 40%;
-  max-width: 50%;
+  max-width: 60%;
 }
 
 .present-replace-container {
@@ -216,4 +216,33 @@ pre {
 
 .fa.fa-arrow-right:hover, .fa.fa-arrow-left:hover {
   cursor: pointer;
+}
+
+.present-container h1 {
+  font-size: 3.5em;
+}
+
+.present-container h2 {
+  font-size: 3em;
+}
+
+.present-container h3 {
+  font-size: 2.5em;
+}
+
+.present-container h4 {
+  font-size: 2em;
+}
+
+.present-container ul, .present-container p {
+  font-size: 36px;
+}
+
+.present-container pre {
+  font-size: 26px;
+  margin-top: 30px;
+}
+
+.present-container li {
+  line-height: 1.3;
 }

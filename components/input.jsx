@@ -197,7 +197,7 @@ const demoText = `
 
 # Code Snippets And Blocks
 
-* Supports single line code \`snippets\` with backticks
+* Supports in-line code \`snippets\` with backticks
 * Or, use multi-line code blocks with automatic syntax highlighting:
 
 \`\`\`js
