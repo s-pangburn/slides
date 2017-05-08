@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Edit from './input';
+import Edit from './edit';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 document.addEventListener("DOMContentLoaded", () => {

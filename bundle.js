@@ -25121,277 +25121,7 @@ module.exports = function parseLinkTitle(state, pos) {
 
 
 /***/ }),
-/* 115 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(6);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _remarkable = __webpack_require__(250);
-
-var _remarkable2 = _interopRequireDefault(_remarkable);
-
-var _highlightjs = __webpack_require__(138);
-
-var _highlightjs2 = _interopRequireDefault(_highlightjs);
-
-var _reactRouterDom = __webpack_require__(68);
-
-var _presentation = __webpack_require__(118);
-
-var _presentation2 = _interopRequireDefault(_presentation);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var CodeMirror = __webpack_require__(148);
-__webpack_require__(120);
-
-var Edit = function (_React$Component) {
-  _inherits(Edit, _React$Component);
-
-  function Edit() {
-    _classCallCheck(this, Edit);
-
-    var _this = _possibleConstructorReturn(this, (Edit.__proto__ || Object.getPrototypeOf(Edit)).call(this));
-
-    _this.updateText = _this.updateText.bind(_this);
-    _this.togglePresent = _this.togglePresent.bind(_this);
-    _this.rawMarkup = _this.rawMarkup.bind(_this);
-    _this.resetInput = _this.resetInput.bind(_this);
-    _this.updateCurrentSlide = _this.updateCurrentSlide.bind(_this);
-    _this.indexOfCursorLocation = _this.indexOfCursorLocation.bind(_this);
-    _this.addClickListener = _this.addClickListener.bind(_this);
-    _this.slideRight = _this.slideRight.bind(_this);
-    _this.slideLeft = _this.slideLeft.bind(_this);
-    _this.handleArrowKey = _this.handleArrowKey.bind(_this);
-
-    var input = window.localStorage.input || demoText;
-    var slides = input.split("---");
-    _this.state = { input: input, slides: slides, currentSlide: 0, present: false };
-    return _this;
-  }
-
-  _createClass(Edit, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.addClickListener();
-    }
-  }, {
-    key: 'addClickListener',
-    value: function addClickListener() {
-      var cm = document.querySelector(".ReactCodeMirror");
-      cm.addEventListener("click", this.updateCurrentSlide);
-    }
-  }, {
-    key: 'updateText',
-    value: function updateText(input) {
-      window.localStorage.input = input;
-      this.setState({
-        input: input,
-        slides: input.split("---") }, this.updateCurrentSlide);
-    }
-  }, {
-    key: 'updateCurrentSlide',
-    value: function updateCurrentSlide() {
-      var charCount = 0;
-      var cursorLocation = this.indexOfCursorLocation();
-
-      for (var i = 0; i < this.state.slides.length; i++) {
-        if (cursorLocation <= charCount + this.state.slides[i].length) {
-          this.setState({ currentSlide: i });
-          return;
-        } else {
-          // add 3 to account for '---' lost in split
-          charCount += this.state.slides[i].length + 3;
-        }
-      }
-    }
-  }, {
-    key: 'slideRight',
-    value: function slideRight() {
-      var previousSlide = this.state.currentSlide;
-      var currentSlide = previousSlide < this.state.slides.length - 1 ? ++previousSlide : previousSlide;
-      this.setState({ currentSlide: currentSlide });
-    }
-  }, {
-    key: 'slideLeft',
-    value: function slideLeft() {
-      var previousSlide = this.state.currentSlide;
-      var currentSlide = previousSlide > 0 ? --previousSlide : previousSlide;
-      this.setState({ currentSlide: currentSlide });
-    }
-  }, {
-    key: 'indexOfCursorLocation',
-    value: function indexOfCursorLocation() {
-      var cm = this.refs.editor.codeMirror;
-      var lines = cm.lineCount();
-      var cursorPos = cm.getCursor();
-      var pos = 0;
-
-      for (var i = 0; i < lines; i++) {
-        var len = cm.getLine(i).length + 1;
-        if (i === cursorPos.line) {
-          pos += cursorPos.ch;
-          break;
-        }
-        pos += len;
-      }
-
-      return pos;
-    }
-  }, {
-    key: 'togglePresent',
-    value: function togglePresent(e) {
-      var _this2 = this;
-
-      e.preventDefault();
-
-      this.setState({ present: !this.state.present }, function () {
-        if (!_this2.state.present) {
-          _this2.addClickListener();
-        }
-      });
-    }
-  }, {
-    key: 'handleArrowKey',
-    value: function handleArrowKey(e) {
-      e.preventDefault();
-
-      if (e.key === "ArrowRight") {
-        e.preventDefault();
-        this.slideRight();
-      } else if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        this.slideLeft();
-      }
-    }
-  }, {
-    key: 'rawMarkup',
-    value: function rawMarkup() {
-      return { __html: md.render(this.state.slides[this.state.currentSlide]) };
-    }
-  }, {
-    key: 'resetInput',
-    value: function resetInput(e) {
-      e.preventDefault();
-
-      window.localStorage.clear();
-      this.setState({ input: "", slides: [], currentSlide: 0 });
-    }
-  }, {
-    key: 'isPresenting',
-    value: function isPresenting() {
-      return this.state.present;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var content = void 0;
-
-      if (!this.state.present) {
-        content = _react2.default.createElement(
-          'div',
-          { className: 'input-container' },
-          _react2.default.createElement(
-            'header',
-            null,
-            _react2.default.createElement(
-              'div',
-              null,
-              _react2.default.createElement('i', { className: 'fa fa-trash-o', onClick: this.resetInput, 'aria-hidden': 'true' }),
-              _react2.default.createElement(
-                _reactRouterDom.Link,
-                { to: 'https://github.com/clairekrogers/slides' },
-                _react2.default.createElement('i', { className: 'fa fa-github', 'aria-hidden': 'true' })
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'header', onClick: this.togglePresent },
-              'Present'
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'codemirror-container' },
-            _react2.default.createElement(CodeMirror, { ref: 'editor', value: this.state.input, onChange: this.updateText, onMouseDown: this.updateText, options: { theme: 'base16-dark', lineNumbers: true, mode: 'markdown', autoSave: true, tabSize: 2, lineWrapping: true } })
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'render-container', onKeyDown: this.handleArrowKey, tabIndex: '0' },
-            _react2.default.createElement('div', { className: 'render-preview', dangerouslySetInnerHTML: this.rawMarkup() }),
-            _react2.default.createElement(
-              'div',
-              { className: 'render-arrows' },
-              _react2.default.createElement('i', { className: 'fa fa-arrow-left', onClick: this.slideLeft, 'aria-hidden': 'true' }),
-              _react2.default.createElement('i', { className: 'fa fa-arrow-right', onClick: this.slideRight, 'aria-hidden': 'true' })
-            )
-          )
-        );
-      } else {
-        content = _react2.default.createElement(_presentation2.default, { slides: this.state.slides, md: md, togglePresent: this.togglePresent, presenting: this.isPresenting.bind(this) });
-      }
-
-      return content;
-    }
-  }]);
-
-  return Edit;
-}(_react2.default.Component);
-
-var md = new _remarkable2.default({
-  html: false, // Enable HTML tags in source
-  xhtmlOut: false, // Use '/' to close single tags (&lt;br /&gt;)
-  breaks: false, // Convert '\n' in paragraphs into &lt;br&gt;
-  langPrefix: 'language-', // CSS language prefix for fenced blocks
-  linkify: true, // autoconvert URL-like texts to links
-  linkTarget: '', // set target to open link in
-
-  // Enable some language-neutral replacements + quotes beautification
-  typographer: false,
-
-  // Double + single quotes replacement pairs, when typographer enabled,
-  // and smartquotes on. Set doubles to '«»' for Russian, '„“' for German.
-  quotes: '“”‘’',
-
-  // Highlighter function. Should return escaped HTML,
-  // or '' if input not changed
-  highlight: function highlight(str, lang) {
-    if (lang && _highlightjs2.default.getLanguage(lang)) {
-      try {
-        return _highlightjs2.default.highlight(lang, str).value;
-      } catch (__) {}
-    }
-
-    try {
-      return _highlightjs2.default.highlightAuto(str).value;
-    } catch (__) {}
-
-    return ''; // use external default escaping
-  }
-});
-
-var demoText = '\n# Markdown Slides\n\n---\n\n# Code Snippets And Blocks\n\n* Supports in-line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\nfor(let i = 0; i < 10; i++) {\n  console.log(\'hello world!\');\n}\n```\n\n---\n\n# Presenting\n\n* Click \'Present\' in navbar\n  * Use arrow keys to navigate through slides\n  * Press `escape` to switch back to \'edit\' mode\n* Slides will be persisted even if you navigate away from site\n\n---\n\n# Real-Time Preview\n\n#### Click around text editor to see selected slide render\n';
-
-exports.default = Edit;
-
-/***/ }),
+/* 115 */,
 /* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -27736,9 +27466,9 @@ var _reactDom = __webpack_require__(42);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _input = __webpack_require__(115);
+var _edit = __webpack_require__(304);
 
-var _input2 = _interopRequireDefault(_input);
+var _edit2 = _interopRequireDefault(_edit);
 
 var _reactRouterDom = __webpack_require__(68);
 
@@ -27749,7 +27479,7 @@ document.addEventListener("DOMContentLoaded", function () {
   _reactDom2.default.render(_react2.default.createElement(
     _reactRouterDom.BrowserRouter,
     null,
-    _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _input2.default })
+    _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _edit2.default })
   ), root);
 });
 
@@ -27804,7 +27534,6 @@ var Presentation = function (_React$Component) {
   _createClass(Presentation, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      console.log("listener added");
       document.addEventListener('keydown', this.toggleSlide);
     }
   }, {
@@ -65464,6 +65193,275 @@ try {
 
 module.exports = g;
 
+
+/***/ }),
+/* 304 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _remarkable = __webpack_require__(250);
+
+var _remarkable2 = _interopRequireDefault(_remarkable);
+
+var _highlightjs = __webpack_require__(138);
+
+var _highlightjs2 = _interopRequireDefault(_highlightjs);
+
+var _reactRouterDom = __webpack_require__(68);
+
+var _presentation = __webpack_require__(118);
+
+var _presentation2 = _interopRequireDefault(_presentation);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CodeMirror = __webpack_require__(148);
+__webpack_require__(120);
+
+var Edit = function (_React$Component) {
+  _inherits(Edit, _React$Component);
+
+  function Edit() {
+    _classCallCheck(this, Edit);
+
+    var _this = _possibleConstructorReturn(this, (Edit.__proto__ || Object.getPrototypeOf(Edit)).call(this));
+
+    _this.updateText = _this.updateText.bind(_this);
+    _this.togglePresent = _this.togglePresent.bind(_this);
+    _this.rawMarkup = _this.rawMarkup.bind(_this);
+    _this.resetInput = _this.resetInput.bind(_this);
+    _this.updateCurrentSlide = _this.updateCurrentSlide.bind(_this);
+    _this.indexOfCursorLocation = _this.indexOfCursorLocation.bind(_this);
+    _this.addClickListener = _this.addClickListener.bind(_this);
+    _this.slideRight = _this.slideRight.bind(_this);
+    _this.slideLeft = _this.slideLeft.bind(_this);
+    _this.handleArrowKey = _this.handleArrowKey.bind(_this);
+
+    var input = window.localStorage.input || demoText;
+    var slides = input.split("---");
+    _this.state = { input: input, slides: slides, currentSlide: 0, present: false };
+    return _this;
+  }
+
+  _createClass(Edit, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.addClickListener();
+    }
+  }, {
+    key: 'addClickListener',
+    value: function addClickListener() {
+      var cm = document.querySelector(".ReactCodeMirror");
+      cm.addEventListener("click", this.updateCurrentSlide);
+    }
+  }, {
+    key: 'updateText',
+    value: function updateText(input) {
+      window.localStorage.input = input;
+      this.setState({
+        input: input,
+        slides: input.split("---") }, this.updateCurrentSlide);
+    }
+  }, {
+    key: 'updateCurrentSlide',
+    value: function updateCurrentSlide() {
+      var charCount = 0;
+      var cursorLocation = this.indexOfCursorLocation();
+
+      for (var i = 0; i < this.state.slides.length; i++) {
+        if (cursorLocation <= charCount + this.state.slides[i].length) {
+          this.setState({ currentSlide: i });
+          return;
+        } else {
+          // add 3 to account for '---' lost in split
+          charCount += this.state.slides[i].length + 3;
+        }
+      }
+    }
+  }, {
+    key: 'slideRight',
+    value: function slideRight() {
+      var previousSlide = this.state.currentSlide;
+      var currentSlide = previousSlide < this.state.slides.length - 1 ? ++previousSlide : previousSlide;
+      this.setState({ currentSlide: currentSlide });
+    }
+  }, {
+    key: 'slideLeft',
+    value: function slideLeft() {
+      var previousSlide = this.state.currentSlide;
+      var currentSlide = previousSlide > 0 ? --previousSlide : previousSlide;
+      this.setState({ currentSlide: currentSlide });
+    }
+  }, {
+    key: 'indexOfCursorLocation',
+    value: function indexOfCursorLocation() {
+      var cm = this.refs.editor.codeMirror;
+      var lines = cm.lineCount();
+      var cursorPos = cm.getCursor();
+      var pos = 0;
+
+      for (var i = 0; i < lines; i++) {
+        var len = cm.getLine(i).length + 1;
+        if (i === cursorPos.line) {
+          pos += cursorPos.ch;
+          break;
+        }
+        pos += len;
+      }
+
+      return pos;
+    }
+  }, {
+    key: 'togglePresent',
+    value: function togglePresent(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+
+      this.setState({ present: !this.state.present }, function () {
+        if (!_this2.state.present) {
+          _this2.addClickListener();
+        }
+      });
+    }
+  }, {
+    key: 'handleArrowKey',
+    value: function handleArrowKey(e) {
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        this.slideRight();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        this.slideLeft();
+      }
+    }
+  }, {
+    key: 'rawMarkup',
+    value: function rawMarkup() {
+      return { __html: md.render(this.state.slides[this.state.currentSlide]) };
+    }
+  }, {
+    key: 'resetInput',
+    value: function resetInput(e) {
+      e.preventDefault();
+
+      window.localStorage.clear();
+      this.setState({ input: "", slides: [], currentSlide: 0 });
+    }
+  }, {
+    key: 'isPresenting',
+    value: function isPresenting() {
+      return this.state.present;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var content = void 0;
+
+      if (!this.state.present) {
+        content = _react2.default.createElement(
+          'div',
+          { className: 'input-container' },
+          _react2.default.createElement(
+            'header',
+            null,
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement('i', { className: 'fa fa-trash-o', onClick: this.resetInput, 'aria-hidden': 'true' }),
+              _react2.default.createElement(
+                _reactRouterDom.Link,
+                { to: 'https://github.com/clairekrogers/slides' },
+                _react2.default.createElement('i', { className: 'fa fa-github', 'aria-hidden': 'true' })
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'header', onClick: this.togglePresent },
+              'Present'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'codemirror-container' },
+            _react2.default.createElement(CodeMirror, { ref: 'editor', value: this.state.input, onChange: this.updateText, onMouseDown: this.updateText, options: { theme: 'base16-dark', lineNumbers: true, mode: 'markdown', autoSave: true, tabSize: 2, lineWrapping: true } })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'render-container', onKeyDown: this.handleArrowKey, tabIndex: '0' },
+            _react2.default.createElement('div', { className: 'render-preview', dangerouslySetInnerHTML: this.rawMarkup() }),
+            _react2.default.createElement(
+              'div',
+              { className: 'render-arrows' },
+              _react2.default.createElement('i', { className: 'fa fa-arrow-left', onClick: this.slideLeft, 'aria-hidden': 'true' }),
+              _react2.default.createElement('i', { className: 'fa fa-arrow-right', onClick: this.slideRight, 'aria-hidden': 'true' })
+            )
+          )
+        );
+      } else {
+        content = _react2.default.createElement(_presentation2.default, { slides: this.state.slides, md: md, togglePresent: this.togglePresent, presenting: this.isPresenting.bind(this) });
+      }
+
+      return content;
+    }
+  }]);
+
+  return Edit;
+}(_react2.default.Component);
+
+var md = new _remarkable2.default({
+  html: false, // Enable HTML tags in source
+  xhtmlOut: false, // Use '/' to close single tags (&lt;br /&gt;)
+  breaks: false, // Convert '\n' in paragraphs into &lt;br&gt;
+  langPrefix: 'language-', // CSS language prefix for fenced blocks
+  linkify: true, // autoconvert URL-like texts to links
+  linkTarget: '', // set target to open link in
+
+  // Enable some language-neutral replacements + quotes beautification
+  typographer: false,
+
+  // Double + single quotes replacement pairs, when typographer enabled,
+  // and smartquotes on. Set doubles to '«»' for Russian, '„“' for German.
+  quotes: '“”‘’',
+
+  // Highlighter function. Should return escaped HTML,
+  // or '' if input not changed
+  highlight: function highlight(str, lang) {
+    if (lang && _highlightjs2.default.getLanguage(lang)) {
+      try {
+        return _highlightjs2.default.highlight(lang, str).value;
+      } catch (__) {}
+    }
+
+    try {
+      return _highlightjs2.default.highlightAuto(str).value;
+    } catch (__) {}
+
+    return ''; // use external default escaping
+  }
+});
+
+var demoText = '\n# Markdown Slides\n\n---\n\n# Code Snippets And Blocks\n\n* Supports in-line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\nfor(let i = 0; i < 10; i++) {\n  console.log(\'hello world!\');\n}\n```\n\n---\n\n# Presenting\n\n* Click \'Present\' in navbar\n  * Use arrow keys to navigate through slides\n  * Press `escape` to switch back to \'edit\' mode\n* Slides will be persisted even if you navigate away from site\n\n---\n\n# Real-Time Preview\n\n#### Click around text editor to see selected slide render\n';
+
+exports.default = Edit;
 
 /***/ })
 /******/ ]);

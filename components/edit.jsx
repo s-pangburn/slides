@@ -97,8 +97,6 @@ class Edit extends React.Component {
   }
 
   handleArrowKey(e) {
-    e.preventDefault();
-
     if(e.key === "ArrowRight") {
       e.preventDefault();
       this.slideRight();

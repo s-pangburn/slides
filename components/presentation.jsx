@@ -12,7 +12,6 @@ class Presentation extends React.Component {
   }
 
   componentDidMount() {
-    console.log("listener added");
     document.addEventListener('keydown', this.toggleSlide);
   }
 

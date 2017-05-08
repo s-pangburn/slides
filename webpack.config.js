@@ -20,10 +20,8 @@ module.exports = {
     ]
   },
   devtool: 'source-maps',
-  devServer: {
-    historyApiFallback: {
-      index: "./index.html"
-    }
+  stats: {
+    warnings: false
   },
   resolve: {
     extensions: [ ".js", ".jsx", "*" ]
