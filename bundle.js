@@ -65459,7 +65459,7 @@ var md = new _remarkable2.default({
   }
 });
 
-var demoText = '\n# Markdown Slides\n\n---\n\n# Code Snippets\n\n* Supports in-line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\nfor(let i = 0; i < 10; i++) {\n  console.log(\'hello world!\');\n}\n```\n\n---\n\n# Presenting\n\n* Click \'Present\' in navbar\n  * Use arrow keys to navigate through slides\n  * Press `escape` to switch back to \'edit\' mode\n* Slides will be persisted even if you navigate away from site\n\n---\n\n# Real-Time Preview\n\n#### Click around text editor to see selected slide render\n';
+var demoText = '\n# Markdown Slides\n\n---\n\n## Code Snippets\n\n* Supports in-line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\nfor(let i = 0; i < 10; i++) {\n  console.log(\'hello world!\');\n}\n```\n\n---\n\n## Presenting\n\n* Click \'Present\' in navbar\n  * Use arrow keys to navigate through slides\n  * Press `escape` to switch back to \'edit\' mode\n* Slides will be persisted even if you navigate away from site\n\n---\n\n## Real-Time Preview\n\n#### Click around text editor to see selected slide render\n';
 
 exports.default = Edit;
 

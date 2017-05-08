@@ -193,7 +193,7 @@ const demoText = `
 
 ---
 
-# Code Snippets
+## Code Snippets
 
 * Supports in-line code \`snippets\` with backticks
 * Or, use multi-line code blocks with automatic syntax highlighting:
@@ -206,7 +206,7 @@ for(let i = 0; i < 10; i++) {
 
 ---
 
-# Presenting
+## Presenting
 
 * Click 'Present' in navbar
   * Use arrow keys to navigate through slides
@@ -215,7 +215,7 @@ for(let i = 0; i < 10; i++) {
 
 ---
 
-# Real-Time Preview
+## Real-Time Preview
 
 #### Click around text editor to see selected slide render
 `;
