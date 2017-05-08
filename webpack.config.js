@@ -20,9 +20,6 @@ module.exports = {
     ]
   },
   devtool: 'source-maps',
-  stats: {
-    warnings: false
-  },
   resolve: {
     extensions: [ ".js", ".jsx", "*" ]
   }
