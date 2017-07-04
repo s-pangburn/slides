@@ -21,7 +21,7 @@ class Edit extends React.Component {
     this.handleArrowKey = this.handleArrowKey.bind(this);
 
     const input = window.localStorage.input || demoText;
-    const slides = input.split("---");
+    const slides = this.processInput(input);
     this.state = { input, slides, currentSlide: 0, present: false };
   }
 
@@ -38,7 +38,16 @@ class Edit extends React.Component {
     window.localStorage.input = input;
     this.setState({
       input,
-      slides: input.split("---") }, this.updateCurrentSlide);
+      slides: this.processInput(input) },
+      this.updateCurrentSlide);
+  }
+
+  processInput(input) {
+    return input
+      .split("\n")
+      .filter(line => !line.startsWith("Note:"))
+      .join("\n")
+      .split("---");
   }
 
   updateCurrentSlide() {
@@ -212,6 +221,8 @@ for(let i = 0; i < 10; i++) {
   * Use arrow keys to navigate through slides
   * Press \`escape\` to switch back to 'edit' mode
 * Slides will be persisted even if you navigate away from site
+
+Note: this note won't be rendered
 
 ---
 
