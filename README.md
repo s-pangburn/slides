@@ -1,3 +1,3 @@
 # Markdown Slides
 
-Live [here](https://lwassink.github.com/slides).
+Live [here](https://lwassink.github.io/slides).
