@@ -23913,7 +23913,7 @@ var Edit = function (_React$Component) {
               _react2.default.createElement('i', { className: 'fa fa-trash-o', onClick: this.resetInput, 'aria-hidden': 'true' }),
               _react2.default.createElement(
                 _reactRouterDom.Link,
-                { to: 'https://github.com/clairekrogers/slides' },
+                { to: 'https://github.com/lwassink/slides' },
                 _react2.default.createElement('i', { className: 'fa fa-github', 'aria-hidden': 'true' })
               )
             ),

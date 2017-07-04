@@ -139,7 +139,7 @@ class Edit extends React.Component {
           <header>
             <div>
               <i className="fa fa-trash-o" onClick={this.resetInput} aria-hidden="true"></i>
-              <Link to="https://github.com/clairekrogers/slides">
+              <Link to="https://github.com/lwassink/slides">
                 <i className="fa fa-github" aria-hidden="true"></i>
               </Link>
             </div>
