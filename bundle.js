@@ -23773,7 +23773,7 @@ var Edit = function (_React$Component) {
     _this.handleArrowKey = _this.handleArrowKey.bind(_this);
 
     var input = window.localStorage.input || demoText;
-    var slides = input.split("---");
+    var slides = _this.processInput(input);
     _this.state = { input: input, slides: slides, currentSlide: 0, present: false };
     return _this;
   }
@@ -23795,7 +23795,14 @@ var Edit = function (_React$Component) {
       window.localStorage.input = input;
       this.setState({
         input: input,
-        slides: input.split("---") }, this.updateCurrentSlide);
+        slides: this.processInput(input) }, this.updateCurrentSlide);
+    }
+  }, {
+    key: 'processInput',
+    value: function processInput(input) {
+      return input.split("\n").filter(function (line) {
+        return !line.startsWith("Note:");
+      }).join("\n").split("---");
     }
   }, {
     key: 'updateCurrentSlide',
@@ -23906,7 +23913,7 @@ var Edit = function (_React$Component) {
               _react2.default.createElement('i', { className: 'fa fa-trash-o', onClick: this.resetInput, 'aria-hidden': 'true' }),
               _react2.default.createElement(
                 _reactRouterDom.Link,
-                { to: 'https://github.com/lwassink/slides' },
+                { to: 'https://github.com/clairekrogers/slides' },
                 _react2.default.createElement('i', { className: 'fa fa-github', 'aria-hidden': 'true' })
               )
             ),
@@ -23976,7 +23983,7 @@ var md = new _remarkable2.default({
   }
 });
 
-var demoText = '\n# Markdown Slides\n\n---\n\n## Code Snippets\n\n* Supports in-line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\nfor(let i = 0; i < 10; i++) {\n  console.log(\'hello world!\');\n}\n```\n\n---\n\n## Presenting\n\n* Click \'Present\' in navbar\n  * Use arrow keys to navigate through slides\n  * Press `escape` to switch back to \'edit\' mode\n* Slides will be persisted even if you navigate away from site\n\n---\n\n## Real-Time Preview\n\n#### Click around text editor to see selected slide render\n';
+var demoText = '\n# Markdown Slides\n\n---\n\n## Code Snippets\n\n* Supports in-line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\nfor(let i = 0; i < 10; i++) {\n  console.log(\'hello world!\');\n}\n```\n\n---\n\n## Presenting\n\n* Click \'Present\' in navbar\n  * Use arrow keys to navigate through slides\n  * Press `escape` to switch back to \'edit\' mode\n* Slides will be persisted even if you navigate away from site\n\nNote: this note won\'t be rendered\n\n---\n\n## Real-Time Preview\n\n#### Click around text editor to see selected slide render\n';
 
 exports.default = Edit;
 
@@ -46574,8 +46581,10 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
 /* 141 */
 /***/ (function(module, exports) {
 
+var toString = {}.toString;
+
 module.exports = Array.isArray || function (arr) {
-  return Object.prototype.toString.call(arr) == '[object Array]';
+  return toString.call(arr) == '[object Array]';
 };
 
 
