@@ -17101,7 +17101,7 @@ Router.childContextTypes = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_path_to_regexp__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_path_to_regexp__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_path_to_regexp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_path_to_regexp__);
 
 
@@ -23800,9 +23800,16 @@ var Edit = function (_React$Component) {
   }, {
     key: 'processInput',
     value: function processInput(input) {
-      return input.split("\n").filter(function (line) {
-        return !line.startsWith("Note:");
-      }).join("\n").split("---");
+      var _this2 = this;
+
+      return input.split("---").map(function (slide) {
+        return _this2.removeNote(slide);
+      });
+    }
+  }, {
+    key: 'removeNote',
+    value: function removeNote(slide) {
+      return slide.split("\nNote:")[0];
     }
   }, {
     key: 'updateCurrentSlide',
@@ -23856,13 +23863,13 @@ var Edit = function (_React$Component) {
   }, {
     key: 'togglePresent',
     value: function togglePresent(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       e.preventDefault();
 
       this.setState({ present: !this.state.present }, function () {
-        if (!_this2.state.present) {
-          _this2.addClickListener();
+        if (!_this3.state.present) {
+          _this3.addClickListener();
         }
       });
     }
@@ -46579,17 +46586,6 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
 
 /***/ }),
 /* 141 */
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-module.exports = Array.isArray || function (arr) {
-  return toString.call(arr) == '[object Array]';
-};
-
-
-/***/ }),
-/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -46973,10 +46969,10 @@ module.exports = debounce;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(305)))
 
 /***/ }),
-/* 143 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isarray = __webpack_require__(141)
+var isarray = __webpack_require__(143)
 
 /**
  * Expose `pathToRegexp`.
@@ -47405,6 +47401,15 @@ function pathToRegexp (path, keys, options) {
 
 
 /***/ }),
+/* 143 */
+/***/ (function(module, exports) {
+
+module.exports = Array.isArray || function (arr) {
+  return Object.prototype.toString.call(arr) == '[object Array]';
+};
+
+
+/***/ }),
 /* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -47550,7 +47555,7 @@ var React = __webpack_require__(6);
 var ReactDOM = __webpack_require__(30);
 var findDOMNode = ReactDOM.findDOMNode;
 var className = __webpack_require__(112);
-var debounce = __webpack_require__(142);
+var debounce = __webpack_require__(141);
 
 function normalizeLineEndings(str) {
 	if (!str) return str;

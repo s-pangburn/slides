@@ -44,10 +44,12 @@ class Edit extends React.Component {
 
   processInput(input) {
     return input
-      .split("\n")
-      .filter(line => !line.startsWith("Note:"))
-      .join("\n")
-      .split("---");
+      .split("---")
+      .map(slide => this.removeNote(slide));
+  }
+
+  removeNote(slide) {
+    return slide.split("\nNote:")[0];
   }
 
   updateCurrentSlide() {
