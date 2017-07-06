@@ -23800,9 +23800,7 @@ var Edit = function (_React$Component) {
   }, {
     key: 'processInput',
     value: function processInput(input) {
-      return input.split("\n").filter(function (line) {
-        return !line.startsWith("Note:");
-      }).join("\n").split("---");
+      return input.split("---");
     }
   }, {
     key: 'updateCurrentSlide',
@@ -23880,7 +23878,13 @@ var Edit = function (_React$Component) {
   }, {
     key: 'rawMarkup',
     value: function rawMarkup() {
-      return { __html: md.render(this.state.slides[this.state.currentSlide]) };
+      var curSlide = this.removeNotes(this.state.slides[this.state.currentSlide]);
+      return { __html: md.render(curSlide) };
+    }
+  }, {
+    key: 'removeNotes',
+    value: function removeNotes(slide) {
+      return slide.split("\nNote:")[0];
     }
   }, {
     key: 'resetInput',
@@ -23983,7 +23987,7 @@ var md = new _remarkable2.default({
   }
 });
 
-var demoText = '\n# Markdown Slides\n\n---\n\n## Code Snippets\n\n* Supports in-line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\nfor(let i = 0; i < 10; i++) {\n  console.log(\'hello world!\');\n}\n```\n\n---\n\n## Presenting\n\n* Click \'Present\' in navbar\n  * Use arrow keys to navigate through slides\n  * Press `escape` to switch back to \'edit\' mode\n* Slides will be persisted even if you navigate away from site\n\nNote: this note won\'t be rendered\n\n---\n\n## Real-Time Preview\n\n#### Click around text editor to see selected slide render\n';
+var demoText = '\n# Markdown Slides\n\n---\n\n## Code Snippets\n\n* Supports in-line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\nfor(let i = 0; i < 10; i++) {\n  console.log(\'hello world!\');\n}\n```\n\n---\n\n## Presenting\n\n* Click \'Present\' in navbar\n  * Use arrow keys to navigate through slides\n  * Press `escape` to switch back to \'edit\' mode\n* Slides will be persisted even if you navigate away from site\n\nNote: this is a note\nit won\'t be rendered\n\n---\n\n## Real-Time Preview\n\n#### Click around text editor to see selected slide render\n';
 
 exports.default = Edit;
 
@@ -26408,12 +26412,18 @@ var Presentation = function (_React$Component) {
       var _this2 = this;
 
       var slides = this.props.slides.map(function (slide, i) {
-        var rawMarkup = _this2.props.md.render(slide);
+        var deNotedSlide = _this2.removeNotes(slide);
+        var rawMarkup = _this2.props.md.render(deNotedSlide);
         var progress = Math.round((i + 1) / _this2.props.slides.length * 100);
         return _react2.default.createElement('div', { key: i, className: 'present-slide render-preview', dangerouslySetInnerHTML: { __html: rawMarkup } });
       });
 
       return slides;
+    }
+  }, {
+    key: 'removeNotes',
+    value: function removeNotes(slide) {
+      return slide.split("\nNote:")[0];
     }
   }, {
     key: 'rawMarkup',

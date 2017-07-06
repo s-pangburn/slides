@@ -17,7 +17,8 @@ class Presentation extends React.Component {
 
   generateSlides() {
     const slides = this.props.slides.map((slide, i) => {
-      const rawMarkup =  this.props.md.render(slide);
+      const deNotedSlide = this.removeNotes(slide);
+      const rawMarkup =  this.props.md.render(deNotedSlide);
       const progress = Math.round((i + 1) / this.props.slides.length * 100);
       return (
         <div key={i} className="present-slide render-preview" dangerouslySetInnerHTML={{ __html: rawMarkup }} />
@@ -25,6 +26,10 @@ class Presentation extends React.Component {
     });
 
     return slides;
+  }
+
+  removeNotes(slide) {
+    return slide.split("\nNote:")[0];
   }
 
   rawMarkup() {
