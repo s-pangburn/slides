@@ -43,13 +43,7 @@ class Edit extends React.Component {
   }
 
   processInput(input) {
-    return input
-      .split("---")
-      .map(slide => this.removeNote(slide));
-  }
-
-  removeNote(slide) {
-    return slide.split("\nNote:")[0];
+    return input.split("---");
   }
 
   updateCurrentSlide() {
@@ -118,8 +112,14 @@ class Edit extends React.Component {
   }
 
   rawMarkup() {
-    return { __html: md.render(this.state.slides[this.state.currentSlide]) };
+    const curSlide = this.removeNotes(this.state.slides[this.state.currentSlide]);
+    return { __html: md.render(curSlide) };
   }
+
+  removeNotes(slide) {
+    return slide.split("\nNote:")[0];
+  }
+
 
   resetInput(e) {
     e.preventDefault();
@@ -224,7 +224,8 @@ for(let i = 0; i < 10; i++) {
   * Press \`escape\` to switch back to 'edit' mode
 * Slides will be persisted even if you navigate away from site
 
-Note: this note won't be rendered
+Note: this is a note
+it won't be rendered
 
 ---
 
