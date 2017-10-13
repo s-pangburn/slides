@@ -27,11 +27,18 @@ class Edit extends React.Component {
 
   componentDidMount() {
     this.addClickListener();
+    this.addFullScreenToggle();
   }
 
   addClickListener() {
     const cm = document.querySelector(".ReactCodeMirror");
     cm.addEventListener("click", this.updateCurrentSlide);
+  }
+
+  addFullScreenToggle() {
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "F5" || e.key === "Escape") this.togglePresent(e);
+    });
   }
 
   updateText(input) {
@@ -108,6 +115,9 @@ class Edit extends React.Component {
     } else if(e.key === "ArrowLeft") {
       e.preventDefault();
       this.slideLeft();
+    } else if(e.key === "F5") {
+      e.preventDefault();
+      this.togglePresent(e);
     }
   }
 

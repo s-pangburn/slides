@@ -38,19 +38,35 @@ class Presentation extends React.Component {
 
   toggleSlide(e) {
     const currentSlide = this.state.currentSlide;
+    let prevSlide = false;
+    let nextSlide = false;
+
+    switch (e.key) {
+      case "PageUp":
+      case "ArrowLeft":
+        prevSlide = true;
+        break;
+      case "PageDown":
+      case "ArrowRight":
+        nextSlide = true;
+        break;
+      case ".":
+        break;
+    }
 
     if(!this.props.presenting()) {
       return;
-    } else if(e.key === "ArrowRight" && currentSlide < this.props.slides.length - 1) {
+    } else if (nextSlide && currentSlide < this.props.slides.length - 1) {
       e.preventDefault();
       this.setState({ currentSlide: currentSlide + 1 });
-    } else if(e.key === "ArrowLeft" && currentSlide > 0) {
+    } else if (prevSlide && currentSlide > 0) {
       e.preventDefault();
       this.setState({ currentSlide: currentSlide - 1 });
-    } else if(e.key === "Escape") {
-      e.preventDefault();
-      this.props.togglePresent(e);
-    }
+    } 
+    // else if(e.key === "Escape") {
+    //   e.preventDefault();
+    //   this.props.togglePresent(e);
+    // }
   }
 
   render() {
