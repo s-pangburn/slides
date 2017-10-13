@@ -15,6 +15,18 @@ class Presentation extends React.Component {
     document.addEventListener('keydown', this.toggleSlide);
   }
 
+  requestFullScreen() {
+    var el = document.documentElement;
+    var rfs = // for newer Webkit and Firefox
+        el.requestFullScreen
+        || el.webkitRequestFullScreen
+        || el.mozRequestFullScreen
+        || el.msRequestFullScreen;
+    if (typeof rfs != "undefined" && rfs) {
+      rfs.call(el);
+    } 
+  }
+
   generateSlides() {
     const slides = this.props.slides.map((slide, i) => {
       const deNotedSlide = this.removeNotes(slide);
@@ -51,6 +63,7 @@ class Presentation extends React.Component {
         nextSlide = true;
         break;
       case ".":
+        this.requestFullScreen();
         break;
     }
 
@@ -62,11 +75,7 @@ class Presentation extends React.Component {
     } else if (prevSlide && currentSlide > 0) {
       e.preventDefault();
       this.setState({ currentSlide: currentSlide - 1 });
-    } 
-    // else if(e.key === "Escape") {
-    //   e.preventDefault();
-    //   this.props.togglePresent(e);
-    // }
+    }
   }
 
   render() {

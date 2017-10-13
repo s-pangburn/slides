@@ -26822,6 +26822,16 @@ var Presentation = function (_React$Component) {
       document.addEventListener('keydown', this.toggleSlide);
     }
   }, {
+    key: 'requestFullScreen',
+    value: function requestFullScreen() {
+      var el = document.documentElement;
+      var rfs = // for newer Webkit and Firefox
+      el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;
+      if (typeof rfs != "undefined" && rfs) {
+        rfs.call(el);
+      }
+    }
+  }, {
     key: 'generateSlides',
     value: function generateSlides() {
       var _this2 = this;
@@ -26862,6 +26872,7 @@ var Presentation = function (_React$Component) {
           nextSlide = true;
           break;
         case ".":
+          this.requestFullScreen();
           break;
       }
 
@@ -26874,10 +26885,6 @@ var Presentation = function (_React$Component) {
         e.preventDefault();
         this.setState({ currentSlide: currentSlide - 1 });
       }
-      // else if(e.key === "Escape") {
-      //   e.preventDefault();
-      //   this.props.togglePresent(e);
-      // }
     }
   }, {
     key: 'render',
