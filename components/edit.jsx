@@ -76,7 +76,7 @@ class Edit extends React.Component {
 
   slideLeft() {
     let previousSlide = this.state.currentSlide;
-    const currentSlide = previousSlide > 0 ? --previousSlide : previousSlide
+    const currentSlide = previousSlide > 0 ? --previousSlide : previousSlide;
     this.setState({ currentSlide });
   }
 
@@ -151,9 +151,9 @@ class Edit extends React.Component {
           <header>
             <div>
               <i className="fa fa-trash-o" onClick={this.resetInput} aria-hidden="true"></i>
-              <Link to="https://github.com/s-pangburn/slides">
+              <a href="https://github.com/s-pangburn/slides">
                 <i className="fa fa-github" aria-hidden="true"></i>
-              </Link>
+              </a>
             </div>
             <div className="header" onClick={this.togglePresent}>Present</div>
           </header>
