@@ -24373,7 +24373,12 @@ var Edit = function (_React$Component) {
           )
         );
       } else {
-        content = _react2.default.createElement(_presentation2.default, { slides: this.state.slides, md: md, togglePresent: this.togglePresent, presenting: this.isPresenting.bind(this) });
+        content = _react2.default.createElement(_presentation2.default, {
+          slides: this.state.slides,
+          md: md,
+          togglePresent: this.togglePresent,
+          presenting: this.isPresenting.bind(this),
+          currentSlide: this.state.currentSlide });
       }
 
       return content;
@@ -26825,7 +26830,7 @@ var Presentation = function (_React$Component) {
     var slides = _this.generateSlides();
     _this.toggleSlide = _this.toggleSlide.bind(_this);
 
-    _this.state = { currentSlide: 0, slides: slides };
+    _this.state = { currentSlide: _this.props.currentSlide, slides: slides };
     return _this;
   }
 

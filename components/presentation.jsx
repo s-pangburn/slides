@@ -8,7 +8,7 @@ class Presentation extends React.Component {
     const slides = this.generateSlides();
     this.toggleSlide = this.toggleSlide.bind(this);
 
-    this.state = { currentSlide: 0, slides };
+    this.state = { currentSlide: this.props.currentSlide, slides };
   }
 
   componentDidMount() {

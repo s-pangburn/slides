@@ -170,7 +170,12 @@ class Edit extends React.Component {
         </div>
       );
     } else {
-      content = <Presentation slides={this.state.slides} md={md} togglePresent={this.togglePresent} presenting={this.isPresenting.bind(this)}/>;
+      content = <Presentation 
+                    slides={this.state.slides} 
+                    md={md} 
+                    togglePresent={this.togglePresent} 
+                    presenting={this.isPresenting.bind(this)} 
+                    currentSlide={this.state.currentSlide}/>;
     }
 
     return content;
