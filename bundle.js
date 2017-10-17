@@ -26845,7 +26845,7 @@ var Presentation = function (_React$Component) {
       var el = document.documentElement;
       var rfs = // for newer Webkit and Firefox
       el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;
-      if (typeof rfs != "undefined" && rfs) {
+      if (typeof rfs !== "undefined" && rfs) {
         rfs.call(el);
       }
     }
@@ -26888,9 +26888,6 @@ var Presentation = function (_React$Component) {
         case "PageDown":
         case "ArrowRight":
           nextSlide = true;
-          break;
-        case ".":
-          this.requestFullScreen();
           break;
       }
 

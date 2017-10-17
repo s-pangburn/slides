@@ -22,7 +22,7 @@ class Presentation extends React.Component {
         || el.webkitRequestFullScreen
         || el.mozRequestFullScreen
         || el.msRequestFullScreen;
-    if (typeof rfs != "undefined" && rfs) {
+    if (typeof rfs !== "undefined" && rfs) {
       rfs.call(el);
     } 
   }
@@ -61,9 +61,6 @@ class Presentation extends React.Component {
       case "PageDown":
       case "ArrowRight":
         nextSlide = true;
-        break;
-      case ".":
-        this.requestFullScreen();
         break;
     }
 
