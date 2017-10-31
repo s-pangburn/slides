@@ -24225,7 +24225,7 @@ var Edit = function (_React$Component) {
   }, {
     key: 'processInput',
     value: function processInput(input) {
-      return input.split("---");
+      return input.split(/[^-]---[^-]/g);
     }
   }, {
     key: 'updateCurrentSlide',

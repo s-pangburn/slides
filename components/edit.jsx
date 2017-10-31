@@ -50,7 +50,7 @@ class Edit extends React.Component {
   }
 
   processInput(input) {
-    return input.split("---");
+    return input.split(/[^-]---[^-]/g);
   }
 
   updateCurrentSlide() {
