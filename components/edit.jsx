@@ -62,8 +62,8 @@ class Edit extends React.Component {
         this.setState({ currentSlide: i });
         return;
       } else {
-        // add 3 to account for '---' lost in split
-        charCount += (this.state.slides[i].length + 3);
+        // add 5 to account for '---' lost in split (plus line breaks)
+        charCount += (this.state.slides[i].length + 5);
       }
     }
   }
