@@ -225,7 +225,7 @@ const demoText = `
 * Or, use multi-line code blocks with automatic syntax highlighting:
 
 \`\`\`js
-for(let i = 0; i < 10; i++) {
+for (let i = 0; i < 10; i++) {
   console.log('hello world!');
 }
 \`\`\`
@@ -237,10 +237,25 @@ for(let i = 0; i < 10; i++) {
 * Click 'Present' in navbar
   * Use arrow keys to navigate through slides
   * Press \`escape\` to switch back to 'edit' mode
+  * Most standard wireless remotes are supported
 * Slides will be persisted even if you navigate away from site
 
 Note: this is a note
 it won't be rendered
+
+---
+
+## Tables
+
+* Tables are supported as well
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
+Note: Three dashes "-" will delineate a new slide, so avoid them in tables or your presentation will be broken up!
 
 ---
 
