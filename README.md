@@ -1,6 +1,6 @@
 # Markdown Slides
 
-Live [here](https://s-pangburn.github.io/slides).
+Live [here](https://appacademy.github.io/slides/).
 
 Now with added laser pointer support!
 
