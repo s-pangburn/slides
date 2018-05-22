@@ -261,7 +261,7 @@ Note: Three dashes "-" will delineate a new slide, so avoid them in tables or yo
 
 ## Real-Time Preview
 
-#### Click around text editor to see selected slide render
+#### Click around the text editor to see the selected slide render!
 `;
 
 export default Edit;
