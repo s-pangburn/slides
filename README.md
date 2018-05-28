@@ -50,4 +50,6 @@ Note: Three dashes "-" will delineate a new slide, so avoid them in tables or yo
 
 #### Click around the text editor to see the selected slide render!
 
+---
+
 Credit to [Claire Rogers](https://github.com/clairekrogers) for creating the [original slides app](https://github.com/clairekrogers/slides).
