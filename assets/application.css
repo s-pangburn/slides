@@ -235,7 +235,7 @@ pre {
   font-size: 2em;
 }
 
-.present-container ul, .present-container p {
+.present-container ol, .present-container ul, .present-container p {
   font-size: 36px;
 }
 
