@@ -22,6 +22,8 @@ class SlideDisplay extends React.Component {
   }
 
   handleKeyPress(e) {
+    if (e.target !== document.body) { return; }
+
     switch (e.key) {
       case "PageUp":
       case "ArrowUp":

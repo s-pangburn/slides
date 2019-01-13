@@ -38,7 +38,7 @@ class EditView extends React.Component {
               <i className="fa fa-github" aria-hidden="true"></i>
             </a>
           </div>
-          <Link className="header" to="/present">Present</Link>
+          <Link className="header" to="/present" target="_blank">Present</Link>
         </header>
         <div className="codemirror-container" >
           {this.renderCodeMirror()}
