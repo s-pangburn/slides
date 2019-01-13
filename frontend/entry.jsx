@@ -1,14 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { HashRouter, Route } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
+
 import configureStore from './store/store';
+import PresentViewContainer from './components/present/present_view_container.jsx';
+
 import * as actions from './actions';
 
 const Root = ({ store }) => (
   <Provider store={store}>
     <HashRouter>
-      <Route path="/" component={() => (<div>HELLO!</div>)} />
+      <Switch>
+        <Route exact path="/" component={PresentViewContainer} />
+        <Route path="/present" component={PresentViewContainer} />
+      </Switch>
     </HashRouter>
   </Provider>
 );

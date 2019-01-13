@@ -1,10 +1,9 @@
 import {
   RECEIVE_STATE
 } from '../actions';
+import demoText from '../util/demo_text';
 
-const textReducer = (state = '', action) => {
-  Object.freeze(state);
-
+const textReducer = (state = demoText, action) => {
   switch (action.type) {
     case RECEIVE_STATE:
       return action.text;
