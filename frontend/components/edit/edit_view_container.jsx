@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 
 import EditView from './edit_view';
-import { receiveState } from '../../actions';
+import { updateText } from '../../actions';
 
-const mapStateToProps = ({ text, indices: {textIndex} }) => ({text, textIndex});
+const mapStateToProps = ({ text }) => ({ text });
 
 const mapDispatchToProps = dispatch => ({
-  updateText: (text) => receiveState({text})
+  updateText: (text) => dispatch(updateText(text))
 });
 
 export default connect(

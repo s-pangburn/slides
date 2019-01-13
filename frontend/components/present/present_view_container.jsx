@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 
 import PresentView from './present_view';
-import { receiveState } from '../../actions';
+import { updateSlideIndex } from '../../actions';
 
-const mapStateToProps = ({ slides, indices: {slideIndex} }) => ({slides, slideIndex});
+const mapStateToProps = ({ slides, slideIndex }) => ({ slides, slideIndex });
 
 const mapDispatchToProps = dispatch => ({
-  updateSlideIndex: (slideIndex) => receiveState({slideIndex})
+  updateSlideIndex: (slideIndex) => dispatch(updateSlideIndex(slideIndex))
 });
 
 export default connect(

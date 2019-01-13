@@ -1,26 +1,18 @@
 import {
-  RECEIVE_STATE
+  RECEIVE_STATE,
+  UPDATE_TEXT
 } from '../actions';
-
-const SLIDE_DELIMITER = /[^-]---[^-]/g;
-const NOTE_DELIMITER = "\nNote:";
-
-function parseSlides(text) {
-  return text.split(SLIDE_DELIMITER).map(slideText => {
-    const parts = slideText.split(NOTE_DELIMITER);
-    return {
-      markdown: parts[0],
-      notes: parts.slice(1).join(NOTE_DELIMITER)
-    };
-  });
-}
+import { parseSlides } from '../util/slides';
 
 const slidesReducer = (state = [], action) => {
   Object.freeze(state);
 
   switch (action.type) {
+
     case RECEIVE_STATE:
+    case UPDATE_TEXT:
       return parseSlides(action.text);
+
     default:
       return state;
   }
