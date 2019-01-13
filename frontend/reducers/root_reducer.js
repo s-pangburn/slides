@@ -23,13 +23,14 @@ export default (state = defaultState, action) => {
       if (!text && text !== '') {
         text = defaultState.text;
       }
-      slideIndex = slideIndex || 0;
+      slideIndex = parseInt(slideIndex) || 0;
+      const slides = slidesReducer(
+        state.slides, Object.assign({}, action, {text}));
+      if (slideIndex >= slides.length) {
+        slideIndex = slides.length - 1;
+      }
 
-      return {
-        text,
-        slides: slidesReducer(state.slides, Object.assign({}, action, {text})),
-        slideIndex
-      };
+      return {text, slides, slideIndex};
 
     case UPDATE_TEXT:
       return Object.assign({}, state, {
@@ -38,7 +39,11 @@ export default (state = defaultState, action) => {
       });
 
     case UPDATE_SLIDE_INDEX:
-      return Object.assign({}, state, {slideIndex: parseInt(action.slideIndex)});
+      slideIndex = parseInt(action.slideIndex);
+      if (slideIndex >= state.slides.length) {
+        slideIndex = slides.length - 1;
+      }
+      return Object.assign({}, state, {slideIndex});
 
     default:
       return state;

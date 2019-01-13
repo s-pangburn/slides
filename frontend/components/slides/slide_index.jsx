@@ -11,6 +11,14 @@ class SlideIndex extends React.Component {
     this.slideRight = this.slideRight.bind(this);
   }
 
+  componentDidMount() {
+    document.body.addEventListener('keydown', this.handleKeyPress);
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('keydown', this.handleKeyPress);
+  }
+
   currentSlide() {
     return this.props.slides[this.props.slideIndex];
   }
@@ -29,6 +37,16 @@ class SlideIndex extends React.Component {
       case "ArrowRight":
         e.preventDefault();
         this.slideRight();
+        break;
+
+      case "Home":
+        e.preventDefault();
+        this.props.updateSlideIndex(0);
+        break;
+
+      case "End":
+        e.preventDefault();
+        this.props.updateSlideIndex(this.props.slides.length - 1);
         break;
     }
   }

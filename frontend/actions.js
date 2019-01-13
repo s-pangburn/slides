@@ -10,7 +10,6 @@ export const receiveState = ({ text, slideIndex }) => ({
 });
 
 export const updateText = (text) => {
-  console.log('text');
   localStorage.setItem('text', text);
   return {
     type: UPDATE_TEXT,
@@ -19,7 +18,6 @@ export const updateText = (text) => {
 };
 
 export const updateSlideIndex = (slideIndex) => {
-  console.log('slide');
   localStorage.setItem('slideIndex', slideIndex);
   return {
     type: UPDATE_SLIDE_INDEX,
