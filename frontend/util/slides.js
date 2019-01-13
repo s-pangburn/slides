@@ -9,4 +9,4 @@ export const parseSlides = (text) => {
       notes: parts.slice(1).join(NOTE_DELIMITER)
     };
   });
-}
+};

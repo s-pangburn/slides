@@ -4,8 +4,8 @@ import {
   UPDATE_SLIDE_INDEX
 } from '../actions';
 import slidesReducer from './slides_reducer';
-import demoText from '../util/demo_text'
-import { parseSlides } from '../util/slides'
+import demoText from '../util/demo_text';
+import { parseSlides } from '../util/slides';
 
 const defaultState = {
   text: demoText,
@@ -30,7 +30,7 @@ export default (state = defaultState, action) => {
       return Object.assign({}, state, {text: action.text});
 
     case UPDATE_SLIDE_INDEX:
-      return Object.assign({}, state, {slideIndex: action.slideIndex});
+      return Object.assign({}, state, {slideIndex: parseInt(action.slideIndex)});
 
     default:
       return state;
