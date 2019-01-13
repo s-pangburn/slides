@@ -27,7 +27,10 @@ export default (state = defaultState, action) => {
       };
 
     case UPDATE_TEXT:
-      return Object.assign({}, state, {text: action.text});
+      return Object.assign({}, state, {
+        text: action.text,
+        slides: slidesReducer(state.slides, action)
+      });
 
     case UPDATE_SLIDE_INDEX:
       return Object.assign({}, state, {slideIndex: parseInt(action.slideIndex)});

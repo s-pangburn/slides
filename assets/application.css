@@ -135,6 +135,12 @@ div.header {
   overflow: scroll;
 }
 
+.slide-index .slides:after {
+  content: '';
+  display: block;
+  height: 60vh;
+}
+
 .slide-index .slide-notes {
   background-color: whitesmoke;
   border-top: solid 2px darkseagreen;
@@ -168,7 +174,7 @@ div.header {
 .slide-index .slide {
   position: relative;
   left: -25vw;
-  top: 27vh;
+  top: 30vh;
   transform: scale(.44);
   margin: -53vh auto;
   border: solid 5px whitesmoke;
