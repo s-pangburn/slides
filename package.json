@@ -20,7 +20,7 @@
     "highlightjs": "^9.12.0",
     "http-server": "^0.11.1",
     "react": "^16.7.0",
-    "react-codemirror": "^1.0.0",
+    "react-codemirror2": "^5.1.0",
     "react-css-transition-replace": "^3.0.3",
     "react-dom": "^16.7.0",
     "react-progressbar": "^15.4.1",

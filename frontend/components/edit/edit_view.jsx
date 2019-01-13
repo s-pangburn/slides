@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-const CodeMirror = require('react-codemirror');
+import {Controlled as CodeMirror} from 'react-codemirror2';
 require('codemirror/mode/markdown/markdown');
 
 class EditView extends React.Component {
@@ -15,12 +15,12 @@ class EditView extends React.Component {
       <CodeMirror
         ref="editor"
         value={this.props.text}
-        onChange={this.props.updateText}
+        onBeforeChange={
+          (editor, data, value) => this.props.updateText(value)}
         options={{
           theme: 'base16-dark',
           lineNumbers: true,
           mode: 'markdown',
-          autoSave: true,
           tabSize: 2,
           lineWrapping: true }}/>
     );
