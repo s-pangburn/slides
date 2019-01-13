@@ -9,12 +9,20 @@ export const receiveState = ({ text, slideIndex }) => ({
   slideIndex
 });
 
-export const updateText = (text) => ({
-  type: UPDATE_TEXT,
-  text
-});
+export const updateText = (text) => {
+  console.log('text');
+  localStorage.setItem('text', text);
+  return {
+    type: UPDATE_TEXT,
+    text
+  };
+};
 
-export const updateSlideIndex = (slideIndex) => ({
-  type: UPDATE_SLIDE_INDEX,
-  slideIndex
-});
+export const updateSlideIndex = (slideIndex) => {
+  console.log('slide');
+  localStorage.setItem('slideIndex', slideIndex);
+  return {
+    type: UPDATE_SLIDE_INDEX,
+    slideIndex
+  };
+};

@@ -19,10 +19,15 @@ export default (state = defaultState, action) => {
   switch (action.type) {
 
     case RECEIVE_STATE:
-      const {text, slideIndex} = action;
+      let {text, slideIndex} = action;
+      if (!text && text !== '') {
+        text = defaultState.text;
+      }
+      slideIndex = slideIndex || 0;
+
       return {
         text,
-        slides: slidesReducer(state.slides, action),
+        slides: slidesReducer(state.slides, Object.assign({}, action, {text})),
         slideIndex
       };
 

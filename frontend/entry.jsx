@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import configureStore from './store/store';
+import { addListeners, rehydrateState } from './util/local_storage';
 
 import EditViewContainer from './components/edit/edit_view_container';
 import PresentViewContainer from './components/present/present_view_container';
@@ -24,9 +25,11 @@ const Root = ({ store }) => (
 
 document.addEventListener("DOMContentLoaded", () => {
   const store = configureStore();
+  rehydrateState(store);
+  addListeners(store);
   window.store = store;
   window.actions = actions;
-  const root = document.getElementById("root");
 
+  const root = document.getElementById("root");
   ReactDOM.render(<Root store={store} />, root);
 });
