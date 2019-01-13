@@ -6,7 +6,10 @@ import SlideDetail from '../slides/slide_detail';
 class PresentView extends React.Component {
   constructor(props) {
     super(props);
+
     this.toggleSlide = this.toggleSlide.bind(this);
+    this.slideLeft = this.slideLeft.bind(this);
+    this.slideRight = this.slideRight.bind(this);
   }
 
   componentDidMount() {
@@ -22,24 +25,28 @@ class PresentView extends React.Component {
   }
 
   toggleSlide(e) {
-    const slideIndex = this.props.slideIndex;
-
     switch (e.key) {
       case "PageUp":
       case "ArrowLeft":
-        console.log('left', slideIndex);
-        if (slideIndex > 0) {
-          this.props.updateSlideIndex(slideIndex - 1);
-        }
+        this.slideLeft();
         break;
 
       case "PageDown":
       case "ArrowRight":
-        console.log('right', slideIndex);
-        if (slideIndex < this.props.slides.length - 1) {
-          this.props.updateSlideIndex(slideIndex + 1);
-        }
+        this.slideRight();
         break;
+    }
+  }
+
+  slideLeft() {
+    if (this.props.slideIndex > 0) {
+      this.props.updateSlideIndex(this.props.slideIndex - 1);
+    }
+  }
+
+  slideRight() {
+    if (this.props.slideIndex < this.props.slides.length - 1) {
+      this.props.updateSlideIndex(this.props.slideIndex + 1);
     }
   }
 
@@ -56,6 +63,14 @@ class PresentView extends React.Component {
           transitionLeaveTimeout={300}>
           <SlideDetail slide={this.currentSlide()} />
         </ReactCSSTransitionReplace>
+        <div className="render-arrows">
+          <i className="fa fa-arrow-left"
+              onClick={this.slideLeft}
+              aria-hidden="true"></i>
+          <i className="fa fa-arrow-right"
+            onClick={this.slideRight}
+            aria-hidden="true"></i>
+        </div>
         <Progress completed={progress} color="darkseagreen" height={5}/>
       </div>
     );
