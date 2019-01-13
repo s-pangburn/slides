@@ -13,4 +13,4 @@ export const rehydrateState = (store) => {
   const text = localStorage.getItem('text');
   const slideIndex = localStorage.getItem('slideIndex');
   store.dispatch(receiveState({ text, slideIndex }));
-}
+};

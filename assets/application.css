@@ -138,7 +138,7 @@ div.header {
 .slide-index .slides:after {
   content: '';
   display: block;
-  height: 60vh;
+  height: 70vh;
 }
 
 .slide-index .slide-notes {
@@ -174,9 +174,9 @@ div.header {
 .slide-index .slide {
   position: relative;
   left: -25vw;
-  top: 30vh;
-  transform: scale(.44);
-  margin: -53vh auto;
+  top: 35vh;
+  transform: scale(.32);
+  margin: -68vh auto;
   border: solid 5px whitesmoke;
 }
 

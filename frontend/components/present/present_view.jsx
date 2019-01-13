@@ -1,10 +1,10 @@
 import React from 'react';
+import SlideDisplay from '../slides/slide_display';
+import SlideDetail from '../slides/slide_detail';
 import ReactCSSTransitionReplace from 'react-css-transition-replace';
 import Progress from 'react-progressbar';
-import SlideIndex from '../slides/slide_index';
-import SlideDetail from '../slides/slide_detail';
 
-class PresentView extends SlideIndex {
+class PresentView extends SlideDisplay {
   render() {
     const progress = Math.round(
       (this.props.slideIndex + 1) / this.props.slides.length * 100);

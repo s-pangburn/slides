@@ -1,72 +1,33 @@
 import React from 'react';
-import SlideDetail from '../slides/slide_detail';
-import SlideNotes from '../slides/slide_notes';
+import SlideDisplay from './slide_display';
+import SlideDetail from './slide_detail';
+import SlideNotes from './slide_notes';
 
-class SlideIndex extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.slideLeft = this.slideLeft.bind(this);
-    this.slideRight = this.slideRight.bind(this);
-  }
-
+class SlideIndex extends SlideDisplay {
   componentDidMount() {
-    document.body.addEventListener('keydown', this.handleKeyPress);
+    super.componentDidMount();
+    this.scroll(this.props);
   }
 
-  componentWillUnmount() {
-    document.body.removeEventListener('keydown', this.handleKeyPress);
+  componentWillReceiveProps(newProps) {
+    if (newProps.slideIndex === this.props.slideIndex) return;
+    this.scroll(newProps);
   }
 
-  currentSlide() {
-    return this.props.slides[this.props.slideIndex];
-  }
+  scroll({ slides, slideIndex }) {
+    const slidesEl = this.refs.slides;
+    console.log(slidesEl);
+    if (!slidesEl) return;
 
-  handleKeyPress(e) {
-    switch (e.key) {
-      case "PageUp":
-      case "ArrowUp":
-      case "ArrowLeft":
-        e.preventDefault();
-        this.slideLeft();
-        break;
-
-      case "PageDown":
-      case "ArrowDown":
-      case "ArrowRight":
-        e.preventDefault();
-        this.slideRight();
-        break;
-
-      case "Home":
-        e.preventDefault();
-        this.props.updateSlideIndex(0);
-        break;
-
-      case "End":
-        e.preventDefault();
-        this.props.updateSlideIndex(this.props.slides.length - 1);
-        break;
-    }
-  }
-
-  slideLeft() {
-    if (this.props.slideIndex > 0) {
-      this.props.updateSlideIndex(this.props.slideIndex - 1);
-    }
-  }
-
-  slideRight() {
-    if (this.props.slideIndex < this.props.slides.length - 1) {
-      this.props.updateSlideIndex(this.props.slideIndex + 1);
-    }
+    const pos = slideIndex / slides.length * slidesEl.scrollHeight;
+    console.log(pos);
+    slidesEl.scrollTo(0, pos);
   }
 
   render() {
     return (
       <div className="slide-index" onKeyDown={this.handleKeyPress}>
-        <ul className="slides">
+        <ul className="slides" ref="slides">
           {this.props.slides.map((slide, i) => (
             <SlideDetail
               key={i} slide={slide}
