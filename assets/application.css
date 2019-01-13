@@ -46,7 +46,6 @@ a, a:visited {
 
 .codemirror-container {
   margin-top: 30px;
-  width: 50%;
   font-size: 16px;
 }
 
@@ -111,29 +110,42 @@ div.header {
   cursor: pointer;
 }
 
-.input-container {
+.side-by-side-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  height: 100vh;
 }
 
-.render-container {
+.side-container {
   width: 50%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-sizing: border-box;
-  padding: 40px;
+  overflow: scroll;
 }
 
-.render-preview {
+.slide-index {
+  /* height: 100%;
+  overflow: scroll; */
+}
+
+.slide {
   color: lightgrey;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 550px;
+  width: 100vw;
+  height: 100vh;
   font-size: 24px;
+}
+
+.slide-index .slide {
+  transform: translate(-25vw, 30vh) scale(.4);
+  margin: -55vh auto;
+  border: solid 5px whitesmoke;
+}
+
+.slide.selected {
+  border-color: darkseagreen;
 }
 
 .present-container {
@@ -249,7 +261,7 @@ pre {
 }
 
 table {
-  margin: 30px; 
+  margin: 30px;
   width: 100%;
   border-collapse: collapse;
 }

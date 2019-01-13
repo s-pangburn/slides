@@ -1,11 +1,11 @@
 import React from 'react';
 import EditViewContainer from './edit/edit_view_container';
-import PresentViewContainer from './present/present_view_container';
+import SlideIndexContainer from './slides/slide_index_container';
 
 const SplitView = (props) => (
-  <div className="input-container">
-    <EditViewContainer />
-    <PresentViewContainer />
+  <div className="side-by-side-container">
+    <div className="side-container"><EditViewContainer /></div>
+    <div className="side-container"><SlideIndexContainer /></div>
   </div>
 );
 
