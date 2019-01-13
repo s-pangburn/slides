@@ -1,7 +1,6 @@
 import React from 'react';
-import ReactCSSTransitionReplace from 'react-css-transition-replace';
-import Progress from 'react-progressbar';
 import SlideDetail from '../slides/slide_detail';
+import SlideNotes from '../slides/slide_notes';
 
 class SlideIndex extends React.Component {
   constructor(props) {
@@ -49,12 +48,15 @@ class SlideIndex extends React.Component {
   render() {
     return (
       <div className="slide-index" onKeyDown={this.handleKeyPress}>
-        {this.props.slides.map((slide, i) => (
-          <SlideDetail
-            key={i} slide={slide}
-            selected={i === this.props.slideIndex}
-            onClick={this.props.updateSlideIndex.bind(null, i)} />
-        ))}
+        <ul className="slides">
+          {this.props.slides.map((slide, i) => (
+            <SlideDetail
+              key={i} slide={slide}
+              selected={i === this.props.slideIndex}
+              onClick={this.props.updateSlideIndex.bind(null, i)} />
+          ))}
+        </ul>
+        <SlideNotes slide={this.currentSlide()} />
       </div>
     );
   }
