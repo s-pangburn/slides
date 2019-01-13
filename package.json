@@ -12,10 +12,10 @@
   "author": "App Academy",
   "license": "ISC",
   "dependencies": {
-    "babel-core": "^6.26.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
     "codemirror": "^5.42.2",
     "highlightjs": "^9.12.0",
     "http-server": "^0.11.1",
@@ -29,6 +29,7 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "remarkable": "^1.7.1",
-    "webpack": "^4.28.4"
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1"
   }
 }
