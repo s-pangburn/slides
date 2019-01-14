@@ -221,8 +221,7 @@ function (_React$Component) {
         "aria-hidden": "true"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         className: "header",
-        to: "/present",
-        target: "_blank"
+        to: "/present"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fa fa-tv",
         "aria-hidden": "true"
@@ -485,7 +484,7 @@ function (_React$Component) {
   }, {
     key: "currentSlide",
     value: function currentSlide() {
-      return this.props.slides[this.props.slideIndex];
+      return this.props.slides[this.props.slideIndex] || this.props.slides[0];
     }
   }, {
     key: "handleKeyPress",
@@ -951,7 +950,7 @@ var configureStore = function configureStore() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n# Markdown Slides\n\n---\n\n## Code Snippets\n\n* Supports in-line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\nfor (let i = 0; i < 10; i++) {\n  console.log('hello world!');\n}\n```\n\n---\n\n## Presenting\n\n* Click 'Present' in navbar\n  * Use arrow keys to navigate through slides\n  * Press `escape` to switch back to 'edit' mode\n  * Most standard wireless remotes are supported\n* Slides will be persisted even if you navigate away from site\n\nNote: this is a note\nit won't be rendered\n\n---\n\n## Tables\n\n* Tables are supported as well\n\n| Tables        | Are           | Cool  |\n| ------------- |:-------------:| -----:|\n| col 3 is      | right-aligned | $1600 |\n| col 2 is      | centered      |   $12 |\n| zebra stripes | are neat      |    $1 |\n\nNote: Three dashes \"-\" will delineate a new slide, so avoid them in tables or your presentation will be broken up!\n\n---\n\n## Real-Time Preview\n\n#### Click around the text editor to see the selected slide render!\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\n# Markdown Slides\n\n---\n\n## Code Snippets\n\n* Supports in-line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\nfor (let i = 0; i < 10; i++) {\n  console.log('hello world!');\n}\n```\n\n---\n\n## Tables\n\n* Tables are supported as well\n\n| Tables        | Are           | Cool  |\n| ------------- |:-------------:| -----:|\n| col 3 is      | right-aligned | $1600 |\n| col 2 is      | centered      |   $12 |\n| zebra stripes | are neat      |    $1 |\n\n---\n\n## Presenting\n\nClick the screen icon in the navbar.\n\n* Use arrow keys (or PgUp/PgDn) to navigate through slides.\n* Home/End go to the beginning/end of the deck.\n* Most standard wireless remotes are supported.\n\n---\n\n## Slides Preview\n\n* The markdown is automatically converted into slides that you can see and scroll through to the right.\n* When the editor is not selected, the same keyboard shortcuts work to advance the slide as in presentation mode.\n* You can also click on slides to select them.\n\nNote:\n* Anything after `Note:` is not rendered in the slide.\n* But it does show up in the notes preview section below.\n\n---\n\n## State is Synced\n\n* The slides are persisted even if you navigate away from site.\n* All changes are immediately synced to all open tabs, including which slide is active.\n* This means you can view and edit your slides in a separate window while your present.\n");
 
 /***/ }),
 

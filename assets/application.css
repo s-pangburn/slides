@@ -141,12 +141,6 @@ header .fa:hover {
   overflow: scroll;
 }
 
-.slide-index .slides:after {
-  content: '';
-  display: block;
-  height: 70vh;
-}
-
 .slide-index .slide-notes {
   background-color: whitesmoke;
   border-top: solid 1px darkseagreen;
@@ -167,7 +161,7 @@ header .fa:hover {
   color: lightgrey;
   width: 100vw;
   height: 100vh;
-  font-size: 24px;
+  font-size: 5vh;
   padding: 5%;
   box-sizing: border-box;
 }
@@ -177,16 +171,22 @@ header .fa:hover {
   color: #333333;
   width: 100vw;
   height: 100vh;
-  font-size: 18px;
+  font-size: 2.5vh;
 }
 
 .slide-index .slide {
   position: relative;
   left: -27.5vw;
-  top: 35vh;
+  top: 32vh;
   transform: scale(.32);
   margin: -65vh auto;
   border: solid 5px whitesmoke;
+}
+
+.slide-index .slides:after {
+  content: '';
+  display: block;
+  height: 65vh;
 }
 
 .slide.selected {
@@ -224,7 +224,6 @@ header .fa:hover {
 
 .markdown pre {
   font-family: monospace;
-  font-size: 18px;
   margin: 15px;
   padding: 10px;
   box-sizing: border-box;
@@ -274,37 +273,8 @@ header .fa:hover {
   cursor: pointer;
 }
 
-.markdown h1 {
-  font-size: 3.5em;
-}
-
-.markdown h2 {
-  font-size: 3em;
-}
-
-.markdown h3 {
-  font-size: 2.5em;
-}
-
-.markdown h4 {
-  font-size: 2em;
-}
-
-.markdown ol, .markdown ul, .markdown p {
-  font-size: 36px;
-}
-
-.markdown pre {
-  font-size: 22px;
-  margin-top: 30px;
-}
-
-.markdown li {
-  line-height: 1.3;
-}
-
 table {
-  margin: 30px;
+  margin: 1.5em 0;
   border-collapse: collapse;
 }
 
@@ -313,7 +283,7 @@ th, td {
 }
 
 th, td {
-  padding: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
 }

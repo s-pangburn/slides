@@ -16,19 +16,6 @@ for (let i = 0; i < 10; i++) {
 
 ---
 
-## Presenting
-
-* Click 'Present' in navbar
-  * Use arrow keys to navigate through slides
-  * Press \`escape\` to switch back to 'edit' mode
-  * Most standard wireless remotes are supported
-* Slides will be persisted even if you navigate away from site
-
-Note: this is a note
-it won't be rendered
-
----
-
 ## Tables
 
 * Tables are supported as well
@@ -39,11 +26,33 @@ it won't be rendered
 | col 2 is      | centered      |   $12 |
 | zebra stripes | are neat      |    $1 |
 
-Note: Three dashes "-" will delineate a new slide, so avoid them in tables or your presentation will be broken up!
+---
+
+## Presenting
+
+Click the screen icon in the navbar.
+
+* Use arrow keys (or PgUp/PgDn) to navigate through slides.
+* Home/End go to the beginning/end of the deck.
+* Most standard wireless remotes are supported.
 
 ---
 
-## Real-Time Preview
+## Slides Preview
 
-#### Click around the text editor to see the selected slide render!
+* The markdown is automatically converted into slides that you can see and scroll through to the right.
+* When the editor is not selected, the same keyboard shortcuts work to advance the slide as in presentation mode.
+* You can also click on slides to select them.
+
+Note:
+* Anything after \`Note:\` is not rendered in the slide.
+* But it does show up in the notes preview section below.
+
+---
+
+## State is Synced
+
+* The slides are persisted even if you navigate away from site.
+* All changes are immediately synced to all open tabs, including which slide is active.
+* This means you can view and edit your slides in a separate window while your present.
 `;

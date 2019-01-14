@@ -18,7 +18,7 @@ class SlideDisplay extends React.Component {
   }
 
   currentSlide() {
-    return this.props.slides[this.props.slideIndex];
+    return this.props.slides[this.props.slideIndex] || this.props.slides[0];
   }
 
   handleKeyPress(e) {

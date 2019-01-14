@@ -39,7 +39,7 @@ class EditView extends React.Component {
             </a>
           </nav>
           <nav>
-            <Link className="header" to="/present" target="_blank">
+            <Link className="header" to="/present">
               <i className="fa fa-tv" aria-hidden="true"></i>
             </Link>
           </nav>
