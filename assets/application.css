@@ -15,17 +15,16 @@ h1, h2, h3, h4 {
 }
 
 p {
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin-bottom: 0.7em;
+  margin-top: 0.7em;
+  line-height: 1.4em;
 }
 
-ul {
-  margin-top: 0;
+ul, ol {
   margin-bottom: 0;
-}
-
-li {
-  line-height: 1.5;
+  margin-top: 0;
+  padding-left: 1em;
+  line-height: 1.4em;
 }
 
 ul code, p code, pre {
@@ -96,7 +95,9 @@ header {
   z-index: 1000;
 }
 
-img {
+p > img {
+  display: block;
+  margin: 0 auto;
   max-width: 100%;
 }
 
@@ -155,6 +156,8 @@ header .fa:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 2%;
+  box-sizing: border-box;
 }
 
 .slide {
@@ -163,8 +166,6 @@ header .fa:hover {
   width: 100vw;
   height: 100vh;
   font-size: 5vh;
-  padding: 5%;
-  box-sizing: border-box;
 }
 
 .slide-notes {
