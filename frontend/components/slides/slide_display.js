@@ -22,7 +22,7 @@ class SlideDisplay extends React.Component {
   }
 
   handleKeyPress(e) {
-    if (e.target !== document.body) { return; }
+    if (e.target !== document.body) { return 'wrong target'; }
 
     switch (e.key) {
       case "PageUp":

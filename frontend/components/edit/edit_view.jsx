@@ -7,19 +7,34 @@ class EditView extends React.Component {
   constructor(props) {
     super(props);
 
-    this.loadFile = this.loadFile.bind(this);
+    this.handleFilePick = this.handleFilePick.bind(this);
+    this.handleFileDrop = this.handleFileDrop.bind(this);
   }
 
   componentDidMount() {
-    this.refs.filepicker.addEventListener('change', this.loadFile);
+    this.refs.filepicker.addEventListener('change', this.handleFilePick);
+    // document.body.addEventListener('drop', this.handleFileDrop);
   }
 
   componentWillUnmount() {
-    this.refs.filepicker.removeEventListener('change', this.loadFile);
+    this.refs.filepicker.removeEventListener('change', this.handleFilePick);
+    // document.body.removeEventListener('drop', this.handleFileDrop);
   }
 
-  loadFile(e) {
+  handleFilePick(e) {
     const file = e.target.files[0];
+    this.loadFile(file);
+  }
+
+  handleFileDrop(e) {
+    const file = e.dataTransfer.items[0];
+    if (file.kind === 'file') {
+      e.preventDefault();
+      this.loadFile(file.getAsFile());
+    }
+  }
+
+  loadFile(file) {
     const reader = new FileReader();
     reader.onloadend = () => this.props.updateText(reader.result);
     reader.readAsText(file);
@@ -60,7 +75,7 @@ class EditView extends React.Component {
             </Link>
           </nav>
         </header>
-        <div className="codemirror-container" >
+        <div className="codemirror-container">
           {this.renderCodeMirror()}
         </div>
       </div>

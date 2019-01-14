@@ -188,26 +188,42 @@ function (_React$Component) {
     _classCallCheck(this, EditView);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(EditView).call(this, props));
-    _this.loadFile = _this.loadFile.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleFilePick = _this.handleFilePick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleFileDrop = _this.handleFileDrop.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(EditView, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.refs.filepicker.addEventListener('change', this.loadFile);
+      this.refs.filepicker.addEventListener('change', this.handleFilePick); // document.body.addEventListener('drop', this.handleFileDrop);
     }
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      this.refs.filepicker.removeEventListener('change', this.loadFile);
+      this.refs.filepicker.removeEventListener('change', this.handleFilePick); // document.body.removeEventListener('drop', this.handleFileDrop);
+    }
+  }, {
+    key: "handleFilePick",
+    value: function handleFilePick(e) {
+      var file = e.target.files[0];
+      this.loadFile(file);
+    }
+  }, {
+    key: "handleFileDrop",
+    value: function handleFileDrop(e) {
+      var file = e.dataTransfer.items[0];
+
+      if (file.kind === 'file') {
+        e.preventDefault();
+        this.loadFile(file.getAsFile());
+      }
     }
   }, {
     key: "loadFile",
-    value: function loadFile(e) {
+    value: function loadFile(file) {
       var _this2 = this;
 
-      var file = e.target.files[0];
       var reader = new FileReader();
 
       reader.onloadend = function () {
@@ -549,7 +565,7 @@ function (_React$Component) {
     key: "handleKeyPress",
     value: function handleKeyPress(e) {
       if (e.target !== document.body) {
-        return;
+        return 'wrong target';
       }
 
       switch (e.key) {
