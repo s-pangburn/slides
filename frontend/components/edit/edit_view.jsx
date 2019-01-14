@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {Controlled as CodeMirror} from 'react-codemirror2';
+import { Controlled as CodeMirror } from 'react-codemirror2';
 require('codemirror/mode/markdown/markdown');
 
 class EditView extends React.Component {
@@ -16,7 +16,7 @@ class EditView extends React.Component {
         ref="editor"
         value={this.props.text}
         onBeforeChange={
-          (editor, data, value) => this.props.updateText(value)}
+          (_editor, _data, value) => this.props.updateText(value)}
         options={{
           theme: 'base16-dark',
           lineNumbers: true,
@@ -28,17 +28,21 @@ class EditView extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="input-container">
         <header>
-          <div>
+          <nav>
             <i className="fa fa-trash-o"
                 onClick={this.resetInput.bind(this)}
                 aria-hidden="true"></i>
             <a href="https://github.com/appacademy/slides">
               <i className="fa fa-github" aria-hidden="true"></i>
             </a>
-          </div>
-          <Link className="header" to="/present" target="_blank">Present</Link>
+          </nav>
+          <nav>
+            <Link className="header" to="/present" target="_blank">
+              <i className="fa fa-tv" aria-hidden="true"></i>
+            </Link>
+          </nav>
         </header>
         <div className="codemirror-container" >
           {this.renderCodeMirror()}

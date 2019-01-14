@@ -193,7 +193,7 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_codemirror2__WEBPACK_IMPORTED_MODULE_2__["Controlled"], {
         ref: "editor",
         value: this.props.text,
-        onBeforeChange: function onBeforeChange(editor, data, value) {
+        onBeforeChange: function onBeforeChange(_editor, _data, value) {
           return _this.props.updateText(value);
         },
         options: {
@@ -208,7 +208,9 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fa fa-trash-o",
         onClick: this.resetInput.bind(this),
         "aria-hidden": "true"
@@ -217,11 +219,14 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fa fa-github",
         "aria-hidden": "true"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         className: "header",
         to: "/present",
         target: "_blank"
-      }, "Present")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fa fa-tv",
+        "aria-hidden": "true"
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "codemirror-container"
       }, this.renderCodeMirror()));
     }
@@ -407,7 +412,7 @@ var SlideDetail = function SlideDetail(_ref) {
       selected = _ref.selected,
       onClick = _ref.onClick;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: selected ? "slide selected" : "slide",
+    className: selected ? "markdown slide selected" : "markdown slide",
     dangerouslySetInnerHTML: {
       __html: _util_markdown__WEBPACK_IMPORTED_MODULE_1__["default"].render(slide.markdown)
     },
@@ -609,10 +614,8 @@ function (_SlideDisplay) {
       var slides = _ref.slides,
           slideIndex = _ref.slideIndex;
       var slidesEl = this.refs.slides;
-      console.log(slidesEl);
       if (!slidesEl) return;
       var pos = slideIndex / slides.length * slidesEl.scrollHeight;
-      console.log(pos);
       slidesEl.scrollTo(0, pos);
     }
   }, {
@@ -701,7 +704,7 @@ __webpack_require__.r(__webpack_exports__);
 var SlideNotes = function SlideNotes(_ref) {
   var slide = _ref.slide;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "slide-notes",
+    className: "markdown slide-notes",
     dangerouslySetInnerHTML: {
       __html: _util_markdown__WEBPACK_IMPORTED_MODULE_1__["default"].render(slide.notes)
     }

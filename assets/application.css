@@ -45,11 +45,12 @@ a, a:visited {
 }
 
 .codemirror-container {
+  position: relative;
   margin-top: 30px;
   font-size: 16px;
 }
 
-.ReactCodeMirror, .CodeMirror {
+.CodeMirror {
   height: 100%;
   background-color: whitesmoke;
   border-right: 1px solid darkseagreen;
@@ -80,16 +81,17 @@ input[type="text"], textarea {
 
 header {
   position: absolute;
-  top: 0;
   left: 0;
-  width: 50%;
+  top: 0;
+  width: 55%;
   height: 30px;
-  background-color: rgb(105,105,105);
-  border-right: 2px solid darkseagreen;
+  background-color: #696969;
+  border-right: 1px solid darkseagreen;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 5px;
   z-index: 1000;
 }
 
@@ -97,15 +99,13 @@ img {
   max-width: 100%;
 }
 
-div.header {
-  display: inline;
+header .fa {
+  margin: 0 10px;
+  font-size: 20px;
+  color: black;
 }
 
-.fa-trash-o, div.header {
-  margin: 0 20px;
-}
-
-.fa-trash-o:hover, div.header:hover {
+header .fa:hover {
   color: lightgrey;
   cursor: pointer;
 }
@@ -116,8 +116,14 @@ div.header {
   height: 100vh;
 }
 
-.side-container {
-  width: 50%;
+.side-by-side-container > :first-child {
+  width: 55%;
+  height: 100%;
+  overflow: scroll;
+}
+
+.side-by-side-container > :last-child {
+  width: 45%;
   height: 100%;
   overflow: scroll;
 }
@@ -143,7 +149,7 @@ div.header {
 
 .slide-index .slide-notes {
   background-color: whitesmoke;
-  border-top: solid 2px darkseagreen;
+  border-top: solid 1px darkseagreen;
   height: 30%;
   width: 100%;
   overflow: scroll;
@@ -154,7 +160,6 @@ div.header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 24px;
 }
 
 .slide {
@@ -162,6 +167,9 @@ div.header {
   color: lightgrey;
   width: 100vw;
   height: 100vh;
+  font-size: 24px;
+  padding: 5%;
+  box-sizing: border-box;
 }
 
 .slide-notes {
@@ -169,14 +177,15 @@ div.header {
   color: #333333;
   width: 100vw;
   height: 100vh;
+  font-size: 18px;
 }
 
 .slide-index .slide {
   position: relative;
-  left: -25vw;
+  left: -27.5vw;
   top: 35vh;
   transform: scale(.32);
-  margin: -68vh auto;
+  margin: -65vh auto;
   border: solid 5px whitesmoke;
 }
 
@@ -209,12 +218,15 @@ div.header {
   align-items: center;
 }
 
-pre {
+.markdown {
+  overflow: scroll;
+}
+
+.markdown pre {
   font-family: monospace;
   font-size: 18px;
   margin: 15px;
   padding: 10px;
-  width: 100%;
   box-sizing: border-box;
   overflow-x: scroll;
 }
@@ -249,11 +261,6 @@ pre {
   transition: height .3s ease-in-out;
 }
 
-.fa.fa-github {
-  font-size: 18px;
-  color: black;
-}
-
 .render-arrows {
   display: flex;
   justify-content: space-between;
@@ -267,38 +274,37 @@ pre {
   cursor: pointer;
 }
 
-.present-container h1 {
+.markdown h1 {
   font-size: 3.5em;
 }
 
-.present-container h2 {
+.markdown h2 {
   font-size: 3em;
 }
 
-.present-container h3 {
+.markdown h3 {
   font-size: 2.5em;
 }
 
-.present-container h4 {
+.markdown h4 {
   font-size: 2em;
 }
 
-.present-container ol, .present-container ul, .present-container p {
+.markdown ol, .markdown ul, .markdown p {
   font-size: 36px;
 }
 
-.present-container pre {
+.markdown pre {
   font-size: 22px;
   margin-top: 30px;
 }
 
-.present-container li {
+.markdown li {
   line-height: 1.3;
 }
 
 table {
   margin: 30px;
-  width: 100%;
   border-collapse: collapse;
 }
 

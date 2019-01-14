@@ -16,11 +16,9 @@ class SlideIndex extends SlideDisplay {
 
   scroll({ slides, slideIndex }) {
     const slidesEl = this.refs.slides;
-    console.log(slidesEl);
     if (!slidesEl) return;
 
     const pos = slideIndex / slides.length * slidesEl.scrollHeight;
-    console.log(pos);
     slidesEl.scrollTo(0, pos);
   }
 
