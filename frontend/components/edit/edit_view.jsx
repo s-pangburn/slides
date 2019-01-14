@@ -5,11 +5,6 @@ require('codemirror/mode/markdown/markdown');
 
 class EditView extends React.Component {
 
-  resetInput(e) {
-    e.preventDefault();
-    this.props.updateText('');
-  }
-
   renderCodeMirror() {
     return (
       <CodeMirror
@@ -32,7 +27,7 @@ class EditView extends React.Component {
         <header>
           <nav>
             <i className="fa fa-trash-o"
-                onClick={this.resetInput.bind(this)}
+                onClick={this.props.resetState}
                 aria-hidden="true"></i>
             <a href="https://github.com/appacademy/slides">
               <i className="fa fa-github" aria-hidden="true"></i>

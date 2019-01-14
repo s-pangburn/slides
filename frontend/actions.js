@@ -9,6 +9,15 @@ export const receiveState = ({ text, slideIndex }) => ({
   slideIndex
 });
 
+export const resetState = () => {
+  localStorage.clear();
+  return {
+    type: RECEIVE_STATE,
+    text: null,
+    slideIndex: null
+  };
+};
+
 export const updateText = (text) => {
   localStorage.setItem('text', text);
   return {

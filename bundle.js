@@ -90,7 +90,7 @@
 /*!*****************************!*\
   !*** ./frontend/actions.js ***!
   \*****************************/
-/*! exports provided: RECEIVE_STATE, UPDATE_TEXT, UPDATE_SLIDE_INDEX, receiveState, updateText, updateSlideIndex */
+/*! exports provided: RECEIVE_STATE, UPDATE_TEXT, UPDATE_SLIDE_INDEX, receiveState, resetState, updateText, updateSlideIndex */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -99,6 +99,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_TEXT", function() { return UPDATE_TEXT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_SLIDE_INDEX", function() { return UPDATE_SLIDE_INDEX; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveState", function() { return receiveState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resetState", function() { return resetState; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateText", function() { return updateText; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateSlideIndex", function() { return updateSlideIndex; });
 var RECEIVE_STATE = 'RECEIVE_STATE';
@@ -111,6 +112,14 @@ var receiveState = function receiveState(_ref) {
     type: RECEIVE_STATE,
     text: text,
     slideIndex: slideIndex
+  };
+};
+var resetState = function resetState() {
+  localStorage.clear();
+  return {
+    type: RECEIVE_STATE,
+    text: null,
+    slideIndex: null
   };
 };
 var updateText = function updateText(text) {
@@ -180,12 +189,6 @@ function (_React$Component) {
   }
 
   _createClass(EditView, [{
-    key: "resetInput",
-    value: function resetInput(e) {
-      e.preventDefault();
-      this.props.updateText('');
-    }
-  }, {
     key: "renderCodeMirror",
     value: function renderCodeMirror() {
       var _this = this;
@@ -212,7 +215,7 @@ function (_React$Component) {
         className: "input-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fa fa-trash-o",
-        onClick: this.resetInput.bind(this),
+        onClick: this.props.resetState,
         "aria-hidden": "true"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "https://github.com/appacademy/slides"
@@ -265,6 +268,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     updateText: function updateText(text) {
       return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["updateText"])(text));
+    },
+    resetState: function resetState() {
+      return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["resetState"])());
     }
   };
 };
@@ -411,12 +417,14 @@ var SlideDetail = function SlideDetail(_ref) {
       selected = _ref.selected,
       onClick = _ref.onClick;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: selected ? "markdown slide selected" : "markdown slide",
+    className: selected ? "slide selected" : "slide",
+    onClick: onClick
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "markdown",
     dangerouslySetInnerHTML: {
       __html: _util_markdown__WEBPACK_IMPORTED_MODULE_1__["default"].render(slide.markdown)
-    },
-    onClick: onClick
-  });
+    }
+  }));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (SlideDetail);
