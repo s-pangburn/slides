@@ -4,6 +4,26 @@ import { Controlled as CodeMirror } from 'react-codemirror2';
 require('codemirror/mode/markdown/markdown');
 
 class EditView extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.loadFile = this.loadFile.bind(this);
+  }
+
+  componentDidMount() {
+    this.refs.filepicker.addEventListener('change', this.loadFile);
+  }
+
+  componentWillUnmount() {
+    this.refs.filepicker.removeEventListener('change', this.loadFile);
+  }
+
+  loadFile(e) {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => this.props.updateText(reader.result);
+    reader.readAsText(file);
+  }
 
   renderCodeMirror() {
     return (
@@ -32,6 +52,7 @@ class EditView extends React.Component {
             <a href="https://github.com/appacademy/slides">
               <i className="fa fa-github" aria-hidden="true"></i>
             </a>
+            <input type="file" ref="filepicker" />
           </nav>
           <nav>
             <Link className="header" to="/present">

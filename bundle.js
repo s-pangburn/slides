@@ -163,13 +163,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 
 
@@ -182,22 +182,50 @@ var EditView =
 function (_React$Component) {
   _inherits(EditView, _React$Component);
 
-  function EditView() {
+  function EditView(props) {
+    var _this;
+
     _classCallCheck(this, EditView);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(EditView).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(EditView).call(this, props));
+    _this.loadFile = _this.loadFile.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    return _this;
   }
 
   _createClass(EditView, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.refs.filepicker.addEventListener('change', this.loadFile);
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.refs.filepicker.removeEventListener('change', this.loadFile);
+    }
+  }, {
+    key: "loadFile",
+    value: function loadFile(e) {
+      var _this2 = this;
+
+      var file = e.target.files[0];
+      var reader = new FileReader();
+
+      reader.onloadend = function () {
+        return _this2.props.updateText(reader.result);
+      };
+
+      reader.readAsText(file);
+    }
+  }, {
     key: "renderCodeMirror",
     value: function renderCodeMirror() {
-      var _this = this;
+      var _this3 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_codemirror2__WEBPACK_IMPORTED_MODULE_2__["Controlled"], {
         ref: "editor",
         value: this.props.text,
         onBeforeChange: function onBeforeChange(_editor, _data, value) {
-          return _this.props.updateText(value);
+          return _this3.props.updateText(value);
         },
         options: {
           theme: 'base16-dark',
@@ -222,7 +250,10 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fa fa-github",
         "aria-hidden": "true"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "file",
+        ref: "filepicker"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         className: "header",
         to: "/present"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
