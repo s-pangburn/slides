@@ -308,6 +308,10 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
@@ -332,6 +336,22 @@ function (_SlideDisplay) {
   }
 
   _createClass(PresentView, [{
+    key: "handleKeyPress",
+    value: function handleKeyPress(e) {
+      var superResult = _get(_getPrototypeOf(PresentView.prototype), "handleKeyPress", this).call(this, e);
+
+      if (superResult) {
+        return superResult;
+      }
+
+      switch (e.key) {
+        case "F5":
+        case "Escape":
+          e.preventDefault();
+          this.props.history.push('/');
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var progress = Math.round((this.props.slideIndex + 1) / this.props.slides.length * 100);
@@ -564,6 +584,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _slide_display__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./slide_display */ "./frontend/components/slides/slide_display.js");
 /* harmony import */ var _slide_detail__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./slide_detail */ "./frontend/components/slides/slide_detail.jsx");
 /* harmony import */ var _slide_notes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./slide_notes */ "./frontend/components/slides/slide_notes.jsx");
+/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/es/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -585,6 +606,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -626,6 +648,21 @@ function (_SlideDisplay) {
       slidesEl.scrollTo(0, pos);
     }
   }, {
+    key: "handleKeyPress",
+    value: function handleKeyPress(e) {
+      var superResult = _get(_getPrototypeOf(SlideIndex.prototype), "handleKeyPress", this).call(this, e);
+
+      if (superResult) {
+        return superResult;
+      }
+
+      switch (e.key) {
+        case "F5":
+          e.preventDefault();
+          this.props.history.push('/present');
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this = this;
@@ -633,7 +670,7 @@ function (_SlideDisplay) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "slide-index",
         onKeyDown: this.handleKeyPress
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "slides",
         ref: "slides"
       }, this.props.slides.map(function (slide, i) {
@@ -652,7 +689,7 @@ function (_SlideDisplay) {
   return SlideIndex;
 }(_slide_display__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (SlideIndex);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router__WEBPACK_IMPORTED_MODULE_4__["withRouter"])(SlideIndex));
 
 /***/ }),
 
@@ -958,7 +995,7 @@ var configureStore = function configureStore() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n# Markdown Slides\n\n---\n\n## Code Snippets\n\n* Supports in-line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\nfor (let i = 0; i < 10; i++) {\n  console.log('hello world!');\n}\n```\n\n---\n\n## Tables\n\n* Tables are supported as well\n\n| Tables        | Are           | Cool  |\n| ------------- |:-------------:| -----:|\n| col 3 is      | right-aligned | $1600 |\n| col 2 is      | centered      |   $12 |\n| zebra stripes | are neat      |    $1 |\n\n---\n\n## Presenting\n\nClick the screen icon in the navbar.\n\n* Use arrow keys (or PgUp/PgDn) to navigate through slides.\n* Home/End go to the beginning/end of the deck.\n* Most standard wireless remotes are supported.\n\n---\n\n## Slides Preview\n\n* The markdown is automatically converted into slides that you can see and scroll through to the right.\n* When the editor is not selected, the same keyboard shortcuts work to advance the slide as in presentation mode.\n* You can also click on slides to select them.\n\nNote:\n* Anything after `Note:` is not rendered in the slide.\n* But it does show up in the notes preview section below.\n\n---\n\n## State is Synced\n\n* The slides are persisted even if you navigate away from site.\n* All changes are immediately synced to all open tabs, including which slide is active.\n* This means you can view and edit your slides in a separate window while your present.\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\n# Markdown Slides\n\n---\n\n## Code Snippets\n\n* Supports in-line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\nfor (let i = 0; i < 10; i++) {\n  console.log('hello world!');\n}\n```\n\n---\n\n## Tables\n\n* Tables are supported as well\n\n| Tables        | Are           | Cool  |\n| ------------- |:-------------:| -----:|\n| col 3 is      | right-aligned | $1600 |\n| col 2 is      | centered      |   $12 |\n| zebra stripes | are neat      |    $1 |\n\n---\n\n## Presenting\n\nClick the screen icon in the navbar or press F5.\n\n* Use arrow keys (or PgUp/PgDn) to navigate through slides.\n* Home/End go to the beginning/end of the deck.\n* Press Escape or F5 to switch back to edit mode.\n* Most standard wireless remotes are supported.\n\n---\n\n## Slides Preview\n\n* The markdown is automatically converted into slides that you can see and scroll through to the right.\n* When the editor is not selected, the same keyboard shortcuts work to advance the slide as in presentation mode.\n* You can also click on slides to select them.\n\nNote:\n* Anything after `Note:` is not rendered in the slide.\n* But it does show up in the notes preview section below.\n\n---\n\n## State is Synced\n\n* The slides are persisted even if you navigate away from site.\n* All changes are immediately synced to all open tabs, including which slide is active.\n* This means you can view and edit your slides in a separate window while your present.\n");
 
 /***/ }),
 
@@ -62778,6 +62815,68 @@ var generatePath = function generatePath() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (generatePath);
+
+/***/ }),
+
+/***/ "./node_modules/react-router/es/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/react-router/es/index.js ***!
+  \***********************************************/
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _MemoryRouter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MemoryRouter */ "./node_modules/react-router/es/MemoryRouter.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return _MemoryRouter__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+/* harmony import */ var _Prompt__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Prompt */ "./node_modules/react-router/es/Prompt.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return _Prompt__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+
+/* harmony import */ var _Redirect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Redirect */ "./node_modules/react-router/es/Redirect.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return _Redirect__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+
+/* harmony import */ var _Route__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Route */ "./node_modules/react-router/es/Route.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return _Route__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+
+/* harmony import */ var _Router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Router */ "./node_modules/react-router/es/Router.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return _Router__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+
+/* harmony import */ var _StaticRouter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./StaticRouter */ "./node_modules/react-router/es/StaticRouter.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "StaticRouter", function() { return _StaticRouter__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+
+/* harmony import */ var _Switch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Switch */ "./node_modules/react-router/es/Switch.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Switch", function() { return _Switch__WEBPACK_IMPORTED_MODULE_6__["default"]; });
+
+/* harmony import */ var _generatePath__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./generatePath */ "./node_modules/react-router/es/generatePath.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "generatePath", function() { return _generatePath__WEBPACK_IMPORTED_MODULE_7__["default"]; });
+
+/* harmony import */ var _matchPath__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./matchPath */ "./node_modules/react-router/es/matchPath.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "matchPath", function() { return _matchPath__WEBPACK_IMPORTED_MODULE_8__["default"]; });
+
+/* harmony import */ var _withRouter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./withRouter */ "./node_modules/react-router/es/withRouter.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "withRouter", function() { return _withRouter__WEBPACK_IMPORTED_MODULE_9__["default"]; });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /***/ }),
 

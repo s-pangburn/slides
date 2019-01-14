@@ -2,6 +2,7 @@ import React from 'react';
 import SlideDisplay from './slide_display';
 import SlideDetail from './slide_detail';
 import SlideNotes from './slide_notes';
+import { withRouter } from "react-router";
 
 class SlideIndex extends SlideDisplay {
   componentDidMount() {
@@ -22,21 +23,32 @@ class SlideIndex extends SlideDisplay {
     slidesEl.scrollTo(0, pos);
   }
 
+  handleKeyPress(e) {
+    const superResult = super.handleKeyPress(e);
+    if (superResult) { return superResult; }
+
+    switch (e.key) {
+      case "F5":
+        e.preventDefault();
+        this.props.history.push('/present');
+    }
+  }
+
   render() {
     return (
       <div className="slide-index" onKeyDown={this.handleKeyPress}>
-        <ul className="slides" ref="slides">
+        <div className="slides" ref="slides">
           {this.props.slides.map((slide, i) => (
             <SlideDetail
               key={i} slide={slide}
               selected={i === this.props.slideIndex}
               onClick={this.props.updateSlideIndex.bind(null, i)} />
           ))}
-        </ul>
+        </div>
         <SlideNotes slide={this.currentSlide()} />
       </div>
     );
   }
 }
 
-export default SlideIndex;
+export default withRouter(SlideIndex);

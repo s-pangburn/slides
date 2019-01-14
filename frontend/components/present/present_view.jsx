@@ -5,6 +5,18 @@ import ReactCSSTransitionReplace from 'react-css-transition-replace';
 import Progress from 'react-progressbar';
 
 class PresentView extends SlideDisplay {
+  handleKeyPress(e) {
+    const superResult = super.handleKeyPress(e);
+    if (superResult) { return superResult; }
+
+    switch (e.key) {
+      case "F5":
+      case "Escape":
+        e.preventDefault();
+        this.props.history.push('/');
+    }
+  }
+
   render() {
     const progress = Math.round(
       (this.props.slideIndex + 1) / this.props.slides.length * 100);

@@ -30,10 +30,11 @@ for (let i = 0; i < 10; i++) {
 
 ## Presenting
 
-Click the screen icon in the navbar.
+Click the screen icon in the navbar or press F5.
 
 * Use arrow keys (or PgUp/PgDn) to navigate through slides.
 * Home/End go to the beginning/end of the deck.
+* Press Escape or F5 to switch back to edit mode.
 * Most standard wireless remotes are supported.
 
 ---
