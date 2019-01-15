@@ -795,11 +795,13 @@ __webpack_require__.r(__webpack_exports__);
 var SlideNotes = function SlideNotes(_ref) {
   var slide = _ref.slide;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "markdown slide-notes",
+    className: "slide-notes"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "markdown",
     dangerouslySetInnerHTML: {
       __html: _util_markdown__WEBPACK_IMPORTED_MODULE_1__["default"].render(slide.notes)
     }
-  });
+  }));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (SlideNotes);
