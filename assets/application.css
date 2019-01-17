@@ -46,11 +46,13 @@ a, a:visited {
 
 .codemirror-container {
   position: relative;
-  margin-top: 30px;
+  height: 100%;
+  box-sizing: border-box;
+  padding-top: 30px;
   font-size: 16px;
 }
 
-.CodeMirror {
+.react-codemirror2, .CodeMirror {
   height: 100%;
   background-color: whitesmoke;
   border-right: 1px solid darkseagreen;
@@ -65,7 +67,7 @@ a, a:visited {
 .cm-s-base16-dark .CodeMirror-gutters { background: #333333; }
 .cm-s-base16-dark span.cm-variable-2 { color: darkred; }
 .cm-s-base16-dark .CodeMirror-cursor { border-left: 1px solid black; }
-.cm-s-base16-dark div.CodeMirror-selected { background: white; }
+.cm-s-base16-dark div.CodeMirror-selected { background: palegoldenrod; }
 .cm-s-base16-dark span.cm-comment { color: black; }
 .cm-s-base16-dark span.cm-string { color: lightseagreen; }
 
@@ -85,7 +87,7 @@ header {
   top: 0;
   width: 55%;
   height: 30px;
-  background-color: #696969;
+  background-color: darkgray;
   border-right: 1px solid darkseagreen;
   box-sizing: border-box;
   display: flex;
@@ -121,13 +123,11 @@ header .fa:hover {
 .side-by-side-container > :first-child {
   width: 55%;
   height: 100%;
-  overflow: scroll;
 }
 
 .side-by-side-container > :last-child {
   width: 45%;
   height: 100%;
-  overflow: scroll;
 }
 
 .slide-index {
