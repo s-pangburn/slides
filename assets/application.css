@@ -7,6 +7,7 @@ html, body, #root, .input-container {
 
 body {
   background-color: #333333;
+  overflow: hidden;
 }
 
 h1, h2, h3, h4 {
@@ -85,7 +86,7 @@ header {
   position: absolute;
   left: 0;
   top: 0;
-  width: 55%;
+  width: 60%;
   height: 30px;
   background-color: darkgray;
   border-right: 1px solid darkseagreen;
@@ -121,12 +122,12 @@ header .fa:hover {
 }
 
 .side-by-side-container > :first-child {
-  width: 55%;
+  width: 60%;
   height: 100%;
 }
 
 .side-by-side-container > :last-child {
-  width: 45%;
+  width: 40%;
   height: 100%;
 }
 
@@ -151,7 +152,7 @@ header .fa:hover {
   overflow: scroll;
 }
 
-.slide,.slide-notes {
+.slide, .slide-notes {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -174,11 +175,12 @@ header .fa:hover {
   width: 100vw;
   height: 100vh;
   font-size: 2.5vh;
+  overflow: scroll;
 }
 
 .slide-index .slide {
   position: relative;
-  left: -27.5vw;
+  left: -29.5vw;
   top: 32vh;
   transform: scale(.32);
   margin: -65vh auto;
