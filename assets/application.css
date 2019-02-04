@@ -221,7 +221,7 @@ header .fa:hover {
   overflow: scroll;
 }
 
-.markdown > img {
+.markdown img {
   display: block;
   margin: 0 auto;
   max-width: 100%;
