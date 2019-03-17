@@ -153,6 +153,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 /* harmony import */ var react_codemirror2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-codemirror2 */ "./node_modules/react-codemirror2/index.js");
 /* harmony import */ var react_codemirror2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_codemirror2__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _util_slides__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../util/slides */ "./frontend/util/slides.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -177,6 +178,8 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 __webpack_require__(/*! codemirror/mode/markdown/markdown */ "./node_modules/codemirror/mode/markdown/markdown.js");
 
+
+
 var EditView =
 /*#__PURE__*/
 function (_React$Component) {
@@ -188,8 +191,13 @@ function (_React$Component) {
     _classCallCheck(this, EditView);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(EditView).call(this, props));
+    _this.state = {
+      syncSlideIndex: false
+    };
     _this.handleFilePick = _this.handleFilePick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleFileDrop = _this.handleFileDrop.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleSyncSlideIndexChange = _this.handleSyncSlideIndexChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleCursorActivity = _this.handleCursorActivity.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -220,6 +228,33 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "handleSyncSlideIndexChange",
+    value: function handleSyncSlideIndexChange(e) {
+      this.setState({
+        syncSlideIndex: !this.state.syncSlideIndex
+      });
+    }
+  }, {
+    key: "handleCursorActivity",
+    value: function handleCursorActivity(cm) {
+      if (!this.state.syncSlideIndex) return;
+
+      var _cm$getCursor = cm.getCursor(),
+          line = _cm$getCursor.line,
+          ch = _cm$getCursor.ch;
+
+      var text = cm.getValue();
+      var newlineIdx = 0;
+
+      for (var i = 0; i < line; i++) {
+        newlineIdx = text.indexOf("\n", newlineIdx) + 1;
+      }
+
+      var textUpToCursor = text.slice(0, newlineIdx + ch + 1);
+      var cursorSlideIndex = (textUpToCursor.match(_util_slides__WEBPACK_IMPORTED_MODULE_3__["SLIDE_DELIMITER"]) || []).length;
+      this.props.updateSlideIndex(cursorSlideIndex);
+    }
+  }, {
     key: "loadFile",
     value: function loadFile(file) {
       var _this2 = this;
@@ -243,6 +278,7 @@ function (_React$Component) {
         onBeforeChange: function onBeforeChange(_editor, _data, value) {
           return _this3.props.updateText(value);
         },
+        onCursorActivity: this.handleCursorActivity,
         options: {
           theme: 'base16-dark',
           lineNumbers: true,
@@ -269,7 +305,14 @@ function (_React$Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "file",
         ref: "filepicker"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "checkbox",
+        id: "sync-slide-index",
+        checked: this.state.syncSlideIndex,
+        onChange: this.handleSyncSlideIndexChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "sync-slide-index"
+      }, "Sync slide to cursor")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         className: "header",
         to: "/present"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -313,6 +356,9 @@ var mapStateToProps = function mapStateToProps(_ref) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
+    updateSlideIndex: function updateSlideIndex(slideIndex) {
+      return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["updateSlideIndex"])(slideIndex));
+    },
     updateText: function updateText(text) {
       return dispatch(Object(_actions__WEBPACK_IMPORTED_MODULE_2__["updateText"])(text));
     },
@@ -687,8 +733,7 @@ function (_SlideDisplay) {
   }, {
     key: "scroll",
     value: function scroll(_ref) {
-      var slides = _ref.slides,
-          slideIndex = _ref.slideIndex;
+      var slideIndex = _ref.slideIndex;
       var slidesEl = this.refs.slides;
       if (!slidesEl) return;
       var previousSlideEl = slidesEl.childNodes[slideIndex - 1];
@@ -955,7 +1000,7 @@ var defaultState = {
         text = defaultState.text;
       }
 
-      slideIndex = parseInt(slideIndex) || 0;
+      slideIndex = parseInt(slideIndex) || defaultState.slideIndex;
       var slides = Object(_slides_reducer__WEBPACK_IMPORTED_MODULE_1__["default"])(state.slides, Object.assign({}, action, {
         text: text
       }));

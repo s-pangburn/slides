@@ -2,13 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 require('codemirror/mode/markdown/markdown');
+import { SLIDE_DELIMITER } from '../../util/slides';
 
 class EditView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { syncSlideIndex: false };
 
     this.handleFilePick = this.handleFilePick.bind(this);
     this.handleFileDrop = this.handleFileDrop.bind(this);
+    this.handleSyncSlideIndexChange = this.handleSyncSlideIndexChange.bind(this);
+    this.handleCursorActivity = this.handleCursorActivity.bind(this);
   }
 
   componentDidMount() {
@@ -34,6 +38,27 @@ class EditView extends React.Component {
     }
   }
 
+  handleSyncSlideIndexChange(e) {
+    this.setState({syncSlideIndex: !this.state.syncSlideIndex});
+  }
+
+  handleCursorActivity(cm) {
+    if (!this.state.syncSlideIndex) return;
+
+    const { line, ch } = cm.getCursor();
+    const text = cm.getValue();
+
+    let newlineIdx = 0;
+    for (let i = 0; i < line; i++ ) {
+      newlineIdx = text.indexOf("\n", newlineIdx) + 1;
+    }
+    const textUpToCursor = text.slice(0, newlineIdx + ch + 1);
+    const cursorSlideIndex =
+      (textUpToCursor.match(SLIDE_DELIMITER) || []).length;
+
+    this.props.updateSlideIndex(cursorSlideIndex);
+  }
+
   loadFile(file) {
     const reader = new FileReader();
     reader.onloadend = () => this.props.updateText(reader.result);
@@ -47,6 +72,7 @@ class EditView extends React.Component {
         value={this.props.text}
         onBeforeChange={
           (_editor, _data, value) => this.props.updateText(value)}
+        onCursorActivity={this.handleCursorActivity}
         options={{
           theme: 'base16-dark',
           lineNumbers: true,
@@ -68,6 +94,10 @@ class EditView extends React.Component {
               <i className="fa fa-github" aria-hidden="true"></i>
             </a>
             <input type="file" ref="filepicker" />
+            <input type="checkbox" id="sync-slide-index"
+                   checked={this.state.syncSlideIndex}
+                   onChange={this.handleSyncSlideIndexChange} />
+            <label htmlFor="sync-slide-index">Sync slide to cursor</label>
           </nav>
           <nav>
             <Link className="header" to="/present">

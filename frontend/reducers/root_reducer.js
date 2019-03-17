@@ -23,7 +23,7 @@ export default (state = defaultState, action) => {
       if (!text && text !== '') {
         text = defaultState.text;
       }
-      slideIndex = parseInt(slideIndex) || 0;
+      slideIndex = parseInt(slideIndex) || defaultState.slideIndex;
       const slides = slidesReducer(
         state.slides, Object.assign({}, action, {text}));
       if (slideIndex >= slides.length) {

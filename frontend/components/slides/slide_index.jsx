@@ -15,7 +15,7 @@ class SlideIndex extends SlideDisplay {
     this.scroll(newProps);
   }
 
-  scroll({ slides, slideIndex }) {
+  scroll({ slideIndex }) {
     const slidesEl = this.refs.slides;
     if (!slidesEl) return;
 
