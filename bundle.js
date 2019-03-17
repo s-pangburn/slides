@@ -192,7 +192,7 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(EditView).call(this, props));
     _this.state = {
-      syncSlideIndex: false
+      syncSlideIndex: true
     };
     _this.handleFilePick = _this.handleFilePick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleFileDrop = _this.handleFileDrop.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -205,11 +205,18 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.refs.filepicker.addEventListener('change', this.handleFilePick); // document.body.addEventListener('drop', this.handleFileDrop);
+
+      this.syncCursorToSlideIndex(this.props);
     }
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       this.refs.filepicker.removeEventListener('change', this.handleFilePick); // document.body.removeEventListener('drop', this.handleFileDrop);
+    }
+  }, {
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(newProps) {
+      this.syncCursorToSlideIndex(newProps);
     }
   }, {
     key: "handleFilePick",
@@ -236,23 +243,70 @@ function (_React$Component) {
     }
   }, {
     key: "handleCursorActivity",
-    value: function handleCursorActivity(cm) {
+    value: function handleCursorActivity() {
       if (!this.state.syncSlideIndex) return;
+      var cursorSlideIndex = this.getCursorSlideIndex();
 
-      var _cm$getCursor = cm.getCursor(),
-          line = _cm$getCursor.line,
-          ch = _cm$getCursor.ch;
+      if (cursorSlideIndex !== this.props.slideIndex) {
+        this.props.updateSlideIndex(cursorSlideIndex);
+      }
+    }
+  }, {
+    key: "syncCursorToSlideIndex",
+    value: function syncCursorToSlideIndex(newProps) {
+      if (!this.state.syncSlideIndex) return;
+      var cursor = this.codeMirror.getCursor();
 
-      var text = cm.getValue();
+      var _this$getSlideBounds = this.getSlideBounds(newProps.slideIndex),
+          start = _this$getSlideBounds.start,
+          end = _this$getSlideBounds.end;
+
+      if (cursor.line < start.line) {
+        this.codeMirror.setSelection(start, end, {
+          scroll: true
+        });
+      } else if (cursor.line > end.line) {
+        this.codeMirror.setSelection(end, start, {
+          scroll: true
+        });
+      }
+    }
+  }, {
+    key: "getCursorSlideIndex",
+    value: function getCursorSlideIndex() {
+      var _this$codeMirror$getC = this.codeMirror.getCursor(),
+          line = _this$codeMirror$getC.line,
+          ch = _this$codeMirror$getC.ch;
+
+      var text = this.codeMirror.getValue();
       var newlineIdx = 0;
 
       for (var i = 0; i < line; i++) {
         newlineIdx = text.indexOf("\n", newlineIdx) + 1;
       }
 
-      var textUpToCursor = text.slice(0, newlineIdx + ch + 1);
-      var cursorSlideIndex = (textUpToCursor.match(_util_slides__WEBPACK_IMPORTED_MODULE_3__["SLIDE_DELIMITER"]) || []).length;
-      this.props.updateSlideIndex(cursorSlideIndex);
+      var textUpToCursor = text.slice(0, newlineIdx + ch);
+      return (textUpToCursor.match(_util_slides__WEBPACK_IMPORTED_MODULE_3__["SLIDE_DELIMITER"]) || []).length;
+    }
+  }, {
+    key: "getSlideBounds",
+    value: function getSlideBounds(slideIndex) {
+      var text = this.codeMirror.getValue();
+      var slides = text.split(_util_slides__WEBPACK_IMPORTED_MODULE_3__["SLIDE_DELIMITER"]).slice(0, slideIndex + 1);
+      var startLine = slides.slice(0, slideIndex).reduce(function (cum, slideText) {
+        return cum + (slideText.match(/\n/g) || []).length;
+      }, 0) + 2 * slideIndex;
+      var endLine = startLine + (slides[slideIndex].match(/\n/g) || []).length + 1;
+      return {
+        start: {
+          line: startLine,
+          ch: 0
+        },
+        end: {
+          line: endLine,
+          ch: 0
+        }
+      };
     }
   }, {
     key: "loadFile",
@@ -275,6 +329,9 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_codemirror2__WEBPACK_IMPORTED_MODULE_2__["Controlled"], {
         ref: "editor",
         value: this.props.text,
+        editorDidMount: function editorDidMount(editor) {
+          _this3.codeMirror = editor;
+        },
         onBeforeChange: function onBeforeChange(_editor, _data, value) {
           return _this3.props.updateText(value);
         },
@@ -312,7 +369,7 @@ function (_React$Component) {
         onChange: this.handleSyncSlideIndexChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "sync-slide-index"
-      }, "Sync slide to cursor")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      }, "Sync editor position")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         className: "header",
         to: "/present"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -348,9 +405,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(_ref) {
-  var text = _ref.text;
+  var text = _ref.text,
+      slideIndex = _ref.slideIndex;
   return {
-    text: text
+    text: text,
+    slideIndex: slideIndex
   };
 };
 
@@ -1204,7 +1263,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SLIDE_DELIMITER", function() { return SLIDE_DELIMITER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NOTE_DELIMITER", function() { return NOTE_DELIMITER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseSlides", function() { return parseSlides; });
-var SLIDE_DELIMITER = /[^-]---[^-]/g;
+var SLIDE_DELIMITER = /\r?\n---\r?\n/g;
 var NOTE_DELIMITER = "\nNote:";
 var parseSlides = function parseSlides(text) {
   return text.split(SLIDE_DELIMITER).map(function (slideText) {

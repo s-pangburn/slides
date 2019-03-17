@@ -1,4 +1,4 @@
-export const SLIDE_DELIMITER = /[^-]---[^-]/g;
+export const SLIDE_DELIMITER = /\r?\n---\r?\n/g;
 export const NOTE_DELIMITER = "\nNote:";
 
 export const parseSlides = (text) => {

@@ -7,7 +7,7 @@ import { SLIDE_DELIMITER } from '../../util/slides';
 class EditView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { syncSlideIndex: false };
+    this.state = { syncSlideIndex: true };
 
     this.handleFilePick = this.handleFilePick.bind(this);
     this.handleFileDrop = this.handleFileDrop.bind(this);
@@ -18,11 +18,16 @@ class EditView extends React.Component {
   componentDidMount() {
     this.refs.filepicker.addEventListener('change', this.handleFilePick);
     // document.body.addEventListener('drop', this.handleFileDrop);
+    this.syncCursorToSlideIndex(this.props);
   }
 
   componentWillUnmount() {
     this.refs.filepicker.removeEventListener('change', this.handleFilePick);
     // document.body.removeEventListener('drop', this.handleFileDrop);
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.syncCursorToSlideIndex(newProps);
   }
 
   handleFilePick(e) {
@@ -42,21 +47,50 @@ class EditView extends React.Component {
     this.setState({syncSlideIndex: !this.state.syncSlideIndex});
   }
 
-  handleCursorActivity(cm) {
+  handleCursorActivity() {
     if (!this.state.syncSlideIndex) return;
 
-    const { line, ch } = cm.getCursor();
-    const text = cm.getValue();
+    const cursorSlideIndex = this.getCursorSlideIndex();
+    if (cursorSlideIndex !== this.props.slideIndex) {
+      this.props.updateSlideIndex(cursorSlideIndex);
+    }
+  }
+
+  syncCursorToSlideIndex(newProps) {
+    if (!this.state.syncSlideIndex) return;
+
+    const cursor = this.codeMirror.getCursor();
+    const { start, end } = this.getSlideBounds(newProps.slideIndex);
+
+    if (cursor.line < start.line) {
+      this.codeMirror.setSelection(start, end, {scroll: true});
+    } else if (cursor.line > end.line) {
+      this.codeMirror.setSelection(end, start, {scroll: true});
+    }
+  }
+
+  getCursorSlideIndex() {
+    const { line, ch } = this.codeMirror.getCursor();
+    const text = this.codeMirror.getValue();
 
     let newlineIdx = 0;
     for (let i = 0; i < line; i++ ) {
       newlineIdx = text.indexOf("\n", newlineIdx) + 1;
     }
-    const textUpToCursor = text.slice(0, newlineIdx + ch + 1);
-    const cursorSlideIndex =
-      (textUpToCursor.match(SLIDE_DELIMITER) || []).length;
+    const textUpToCursor = text.slice(0, newlineIdx + ch);
+    return (textUpToCursor.match(SLIDE_DELIMITER) || []).length;
+  }
 
-    this.props.updateSlideIndex(cursorSlideIndex);
+  getSlideBounds(slideIndex) {
+    const text = this.codeMirror.getValue();
+    const slides = text.split(SLIDE_DELIMITER).slice(0, slideIndex + 1);
+
+    let startLine = slides.slice(0, slideIndex).reduce((cum, slideText) => {
+      return cum + (slideText.match(/\n/g) || []).length;
+    }, 0) + 2 * slideIndex;
+    const endLine = startLine + (slides[slideIndex].match(/\n/g) || []).length + 1;
+
+    return {start: {line: startLine, ch: 0}, end: {line: endLine, ch: 0}};
   }
 
   loadFile(file) {
@@ -70,6 +104,7 @@ class EditView extends React.Component {
       <CodeMirror
         ref="editor"
         value={this.props.text}
+        editorDidMount={editor => { this.codeMirror = editor; }}
         onBeforeChange={
           (_editor, _data, value) => this.props.updateText(value)}
         onCursorActivity={this.handleCursorActivity}
@@ -97,7 +132,7 @@ class EditView extends React.Component {
             <input type="checkbox" id="sync-slide-index"
                    checked={this.state.syncSlideIndex}
                    onChange={this.handleSyncSlideIndexChange} />
-            <label htmlFor="sync-slide-index">Sync slide to cursor</label>
+            <label htmlFor="sync-slide-index">Sync editor position</label>
           </nav>
           <nav>
             <Link className="header" to="/present">
