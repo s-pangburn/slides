@@ -691,8 +691,25 @@ function (_SlideDisplay) {
           slideIndex = _ref.slideIndex;
       var slidesEl = this.refs.slides;
       if (!slidesEl) return;
-      var pos = slideIndex / slides.length * slidesEl.scrollHeight;
-      slidesEl.scrollTo(0, pos);
+      var previousSlideEl = slidesEl.childNodes[slideIndex - 1];
+
+      if (!previousSlideEl) {
+        slidesEl.scrollTo({
+          left: 0,
+          top: 0,
+          behavior: 'smooth'
+        });
+        return;
+      }
+
+      var currentSlideEl = slidesEl.childNodes[slideIndex];
+      var margin = (currentSlideEl.offsetTop - (previousSlideEl.offsetTop + previousSlideEl.offsetHeight)) / 2;
+      var pos = currentSlideEl.offsetTop - slidesEl.clientTop - margin;
+      slidesEl.scrollTo({
+        left: 0,
+        top: pos,
+        behavior: 'smooth'
+      });
     }
   }, {
     key: "handleKeyPress",

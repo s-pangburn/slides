@@ -19,8 +19,19 @@ class SlideIndex extends SlideDisplay {
     const slidesEl = this.refs.slides;
     if (!slidesEl) return;
 
-    const pos = slideIndex / slides.length * slidesEl.scrollHeight;
-    slidesEl.scrollTo(0, pos);
+    const previousSlideEl = slidesEl.childNodes[slideIndex - 1];
+    if (!previousSlideEl) {
+      slidesEl.scrollTo({left: 0, top: 0, behavior: 'smooth'});
+      return;
+    }
+
+    const currentSlideEl = slidesEl.childNodes[slideIndex];
+
+    const margin = (currentSlideEl.offsetTop -
+      (previousSlideEl.offsetTop + previousSlideEl.offsetHeight)) / 2;
+    const pos = currentSlideEl.offsetTop - slidesEl.clientTop - margin;
+
+    slidesEl.scrollTo({left: 0, top: pos, behavior: 'smooth'});
   }
 
   handleKeyPress(e) {
