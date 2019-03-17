@@ -1035,14 +1035,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions */ "./frontend/actions.js");
 /* harmony import */ var _slides_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./slides_reducer */ "./frontend/reducers/slides_reducer.js");
 /* harmony import */ var _util_demo_text__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/demo_text */ "./frontend/util/demo_text.js");
+/* harmony import */ var _util_demo_text__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_util_demo_text__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _util_slides__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/slides */ "./frontend/util/slides.js");
 
 
 
 
 var defaultState = {
-  text: _util_demo_text__WEBPACK_IMPORTED_MODULE_2__["default"],
-  slides: Object(_util_slides__WEBPACK_IMPORTED_MODULE_3__["parseSlides"])(_util_demo_text__WEBPACK_IMPORTED_MODULE_2__["default"]),
+  text: _util_demo_text__WEBPACK_IMPORTED_MODULE_2___default.a,
+  slides: Object(_util_slides__WEBPACK_IMPORTED_MODULE_3__["parseSlides"])(_util_demo_text__WEBPACK_IMPORTED_MODULE_2___default.a),
   slideIndex: 0
 };
 /* harmony default export */ __webpack_exports__["default"] = (function () {
@@ -1160,12 +1161,12 @@ var configureStore = function configureStore() {
 /*!************************************!*\
   !*** ./frontend/util/demo_text.js ***!
   \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n# Markdown Slides\n\n---\n\n## Code Snippets\n\n* Supports in-line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\nfor (let i = 0; i < 10; i++) {\n  console.log('hello world!');\n}\n```\n\n---\n\n## Tables\n\n* Tables are supported as well\n\n| Tables        | Are           | Cool  |\n| ------------- |:-------------:| -----:|\n| col 3 is      | right-aligned | $1600 |\n| col 2 is      | centered      |   $12 |\n| zebra stripes | are neat      |    $1 |\n\n---\n\n## Presenting\n\nClick the screen icon in the navbar or press F5.\n\n* Use arrow keys (or PgUp/PgDn) to navigate through slides.\n* Home/End go to the beginning/end of the deck.\n* Press Escape or F5 to switch back to edit mode.\n* Most standard wireless remotes are supported.\n\n---\n\n## Slides Preview\n\n* The markdown is automatically converted into slides that you can see and scroll through to the right.\n* When the editor is not selected, the same keyboard shortcuts work to advance the slide as in presentation mode.\n* You can also click on slides to select them.\n\nNote:\n* Anything after `Note:` is not rendered in the slide.\n* But it does show up in the notes preview section below.\n\n---\n\n## State is Synced\n\n* The slides are persisted even if you navigate away from site.\n* All changes are immediately synced to all open tabs, including which slide is active.\n* This means you can view and edit your slides in a separate window while your present.\n");
+// Node.js is used to write this to the README.md file.
+// CommonJS-style export used for compatibility with Node.js
+module.exports = "\n# Markdown Slides\n\n---\n\n## Code Snippets\n\n* Supports in-line code `snippets` with backticks\n* Or, use multi-line code blocks with automatic syntax highlighting:\n\n```js\nfor (let i = 0; i < 10; i++) {\n  console.log('hello world!');\n}\n```\n\n---\n\n## Tables\n\n* Tables are supported as well\n\n| Tables        | Are           | Cool  |\n| ------------- |:-------------:| -----:|\n| col 3 is      | right-aligned | $1600 |\n| col 2 is      | centered      |   $12 |\n| zebra stripes | are neat      |    $1 |\n\n---\n\n## Presenting\n\nClick the screen icon in the navbar or press F5.\n\n* Use arrow keys (or PgUp/PgDn) to navigate through slides.\n* Home/End go to the beginning/end of the deck.\n* Press Escape or F5 to switch back to edit mode.\n* Most standard wireless remotes are supported.\n\n---\n\n## Slides Preview\n\n* The markdown is automatically converted into slides that you can see and scroll through to the right.\n* When the editor is not selected, the same keyboard shortcuts work to advance the slide as in presentation mode.\n* You can also click on slides to select them.\n\nNote:\n* Anything after `Note:` is not rendered in the slide.\n* But it does show up in the notes preview section below.\n\n---\n\n## State is Synced\n\n* The slides are persisted even if you navigate away from site.\n* All changes are immediately synced to all open tabs, including which slide is active.\n* This means you can view and edit your slides in a separate window while your present.\n\n---\n\n## Cursor Position Syncs\n\nWhen the **Sync editor position** option is checked...\n\n* The current slide adjusts to follow your cursor when editing.\n* The text for the current slide is highlighted in the editor when it is not active.\n* **Warning:** this can have some *weird* consequences if you have two edit views syncing their position at the same time.\n\n---\n\n## Credits\n\n* [Claire Rogers](https://github.com/clairekrogers) adapted the app from [the original](https://github.com/jacksingleton/hacker-slides).\n* [Jon Wolverton](https://github.com/clairekrogers) refactored and updated it to support multiple screens.\n";
 
 /***/ }),
 

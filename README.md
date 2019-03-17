@@ -1,6 +1,5 @@
-# Markdown Slides
 
-[Live link](https://appacademy.github.io/slides/)
+# Markdown Slides
 
 ---
 
@@ -57,6 +56,16 @@ Note:
 * The slides are persisted even if you navigate away from site.
 * All changes are immediately synced to all open tabs, including which slide is active.
 * This means you can view and edit your slides in a separate window while your present.
+
+---
+
+## Cursor Position Syncs
+
+When the **Sync editor position** option is checked...
+
+* The current slide adjusts to follow your cursor when editing.
+* The text for the current slide is highlighted in the editor when it is not active.
+* **Warning:** this can have some *weird* consequences if you have two edit views syncing their position at the same time.
 
 ---
 
