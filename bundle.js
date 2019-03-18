@@ -781,38 +781,35 @@ function (_SlideDisplay) {
     value: function componentDidMount() {
       _get(_getPrototypeOf(SlideIndex.prototype), "componentDidMount", this).call(this);
 
-      this.scroll(this.props);
+      this.scroll(this.props.slideIndex, 'auto');
     }
   }, {
     key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(newProps) {
       if (newProps.slideIndex === this.props.slideIndex) return;
-      this.scroll(newProps);
+      this.scroll(newProps.slideIndex);
     }
   }, {
     key: "scroll",
-    value: function scroll(_ref) {
-      var slideIndex = _ref.slideIndex;
+    value: function scroll(slideIndex, behavior) {
       var slidesEl = this.refs.slides;
       if (!slidesEl) return;
       var previousSlideEl = slidesEl.childNodes[slideIndex - 1];
+      var top;
 
-      if (!previousSlideEl) {
-        slidesEl.scrollTo({
-          left: 0,
-          top: 0,
-          behavior: 'smooth'
-        });
-        return;
+      if (previousSlideEl) {
+        var currentSlideEl = slidesEl.childNodes[slideIndex];
+        var margin = (currentSlideEl.offsetTop - (previousSlideEl.offsetTop + previousSlideEl.offsetHeight)) / 2;
+        top = currentSlideEl.offsetTop - slidesEl.clientTop - margin;
+      } else {
+        top = 0;
       }
 
-      var currentSlideEl = slidesEl.childNodes[slideIndex];
-      var margin = (currentSlideEl.offsetTop - (previousSlideEl.offsetTop + previousSlideEl.offsetHeight)) / 2;
-      var pos = currentSlideEl.offsetTop - slidesEl.clientTop - margin;
+      behavior = behavior || Math.abs(top - slidesEl.scrollTop) > 1000 ? 'auto' : 'smooth';
       slidesEl.scrollTo({
         left: 0,
-        top: pos,
-        behavior: 'smooth'
+        top: top,
+        behavior: behavior
       });
     }
   }, {

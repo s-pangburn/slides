@@ -7,31 +7,35 @@ import { withRouter } from "react-router";
 class SlideIndex extends SlideDisplay {
   componentDidMount() {
     super.componentDidMount();
-    this.scroll(this.props);
+    this.scroll(this.props.slideIndex, 'auto');
   }
 
   componentWillReceiveProps(newProps) {
     if (newProps.slideIndex === this.props.slideIndex) return;
-    this.scroll(newProps);
+    this.scroll(newProps.slideIndex);
   }
 
-  scroll({ slideIndex }) {
+  scroll(slideIndex, behavior) {
     const slidesEl = this.refs.slides;
     if (!slidesEl) return;
 
     const previousSlideEl = slidesEl.childNodes[slideIndex - 1];
-    if (!previousSlideEl) {
-      slidesEl.scrollTo({left: 0, top: 0, behavior: 'smooth'});
-      return;
+
+    let top;
+    if (previousSlideEl) {
+      const currentSlideEl = slidesEl.childNodes[slideIndex];
+
+      const margin = (currentSlideEl.offsetTop -
+        (previousSlideEl.offsetTop + previousSlideEl.offsetHeight)) / 2;
+      top = currentSlideEl.offsetTop - slidesEl.clientTop - margin;
+    } else {
+      top = 0;
     }
 
-    const currentSlideEl = slidesEl.childNodes[slideIndex];
+    behavior = behavior ||
+      Math.abs(top - slidesEl.scrollTop) > 1000 ? 'auto' : 'smooth';
 
-    const margin = (currentSlideEl.offsetTop -
-      (previousSlideEl.offsetTop + previousSlideEl.offsetHeight)) / 2;
-    const pos = currentSlideEl.offsetTop - slidesEl.clientTop - margin;
-
-    slidesEl.scrollTo({left: 0, top: pos, behavior: 'smooth'});
+    slidesEl.scrollTo({left: 0, top, behavior});
   }
 
   handleKeyPress(e) {
