@@ -7,24 +7,25 @@ html, body, #root, .input-container {
 
 body {
   background-color: #333333;
+  overflow: hidden;
 }
 
 h1, h2, h3, h4 {
-  margin: 15px auto 30px auto;
+  margin: 15px auto 25px auto;
+  text-align: center;
 }
 
 p {
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin-bottom: 0.7em;
+  margin-top: 0.7em;
+  line-height: 1.4em;
 }
 
-ul {
-  margin-top: 0;
+ul, ol {
   margin-bottom: 0;
-}
-
-li {
-  line-height: 1.5;
+  margin-top: 0;
+  padding-left: 1em;
+  line-height: 1.4em;
 }
 
 ul code, p code, pre {
@@ -45,12 +46,14 @@ a, a:visited {
 }
 
 .codemirror-container {
-  margin-top: 30px;
-  width: 50%;
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+  padding-top: 30px;
   font-size: 16px;
 }
 
-.ReactCodeMirror, .CodeMirror {
+.react-codemirror2, .CodeMirror {
   height: 100%;
   background-color: whitesmoke;
   border-right: 1px solid darkseagreen;
@@ -65,7 +68,7 @@ a, a:visited {
 .cm-s-base16-dark .CodeMirror-gutters { background: #333333; }
 .cm-s-base16-dark span.cm-variable-2 { color: darkred; }
 .cm-s-base16-dark .CodeMirror-cursor { border-left: 1px solid black; }
-.cm-s-base16-dark div.CodeMirror-selected { background: white; }
+.cm-s-base16-dark div.CodeMirror-selected { background: palegoldenrod; }
 .cm-s-base16-dark span.cm-comment { color: black; }
 .cm-s-base16-dark span.cm-string { color: lightseagreen; }
 
@@ -81,59 +84,111 @@ input[type="text"], textarea {
 
 header {
   position: absolute;
-  top: 0;
   left: 0;
-  width: 50%;
+  top: 0;
+  width: 60%;
   height: 30px;
-  background-color: rgb(105,105,105);
-  border-right: 2px solid darkseagreen;
+  background-color: darkgray;
+  border-right: 1px solid darkseagreen;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 5px;
   z-index: 1000;
 }
 
-img {
-  max-width: 100%;
+header .fa {
+  margin: 0 10px;
+  font-size: 20px;
+  color: black;
 }
 
-div.header {
-  display: inline;
-}
-
-.fa-trash-o, div.header {
-  margin: 0 20px;
-}
-
-.fa-trash-o:hover, div.header:hover {
+header .fa:hover {
   color: lightgrey;
   cursor: pointer;
 }
 
-.input-container {
+.side-by-side-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  height: 100vh;
 }
 
-.render-container {
-  width: 50%;
+.side-by-side-container > :first-child {
+  width: 60%;
   height: 100%;
+}
+
+.side-by-side-container > :last-child {
+  width: 40%;
+  height: 100%;
+}
+
+.slide-index {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  box-sizing: border-box;
-  padding: 40px;
+  height: 100%;
 }
 
-.render-preview {
-  color: lightgrey;
+.slide-index .slides {
+  margin: 0;
+  padding: 0;
+  height: 70%;
+  overflow: scroll;
+}
+
+.slide-index .slide-notes {
+  background-color: whitesmoke;
+  border-top: solid 1px darkseagreen;
+  height: 30%;
+  width: 100%;
+  overflow: scroll;
+}
+
+.slide, .slide-notes {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 550px;
-  font-size: 24px;
+  padding: 2%;
+  box-sizing: border-box;
+}
+
+.slide {
+  background-color: #333333;
+  color: lightgrey;
+  width: 100vw;
+  height: 100vh;
+  font-size: 5vh;
+}
+
+.slide-notes {
+  background-color: whitesmoke;
+  color: #333333;
+  width: 100vw;
+  height: 100vh;
+  font-size: 2.5vh;
+  overflow: scroll;
+}
+
+.slide-index .slide {
+  position: relative;
+  left: -29.5vw;
+  top: 32vh;
+  transform: scale(.32);
+  margin: -65vh auto;
+  border: solid 5px whitesmoke;
+}
+
+.slide-index .slides:after {
+  content: '';
+  display: block;
+  height: 65vh;
+}
+
+.slide.selected {
+  border-color: darkseagreen;
 }
 
 .present-container {
@@ -161,13 +216,24 @@ div.header {
   align-items: center;
 }
 
-pre {
+.markdown {
+  max-width: 100%;
+  overflow: scroll;
+}
+
+.markdown img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: 80vh;
+}
+
+.markdown pre {
   font-family: monospace;
-  font-size: 18px;
   margin: 15px;
   padding: 10px;
-  width: 100%;
   box-sizing: border-box;
+  max-width: 100%;
   overflow-x: scroll;
 }
 
@@ -201,11 +267,6 @@ pre {
   transition: height .3s ease-in-out;
 }
 
-.fa.fa-github {
-  font-size: 18px;
-  color: black;
-}
-
 .render-arrows {
   display: flex;
   justify-content: space-between;
@@ -219,38 +280,8 @@ pre {
   cursor: pointer;
 }
 
-.present-container h1 {
-  font-size: 3.5em;
-}
-
-.present-container h2 {
-  font-size: 3em;
-}
-
-.present-container h3 {
-  font-size: 2.5em;
-}
-
-.present-container h4 {
-  font-size: 2em;
-}
-
-.present-container ul, .present-container p {
-  font-size: 36px;
-}
-
-.present-container pre {
-  font-size: 22px;
-  margin-top: 30px;
-}
-
-.present-container li {
-  line-height: 1.3;
-}
-
 table {
-  margin: 30px; 
-  width: 100%;
+  margin: 1.5em 0;
   border-collapse: collapse;
 }
 
@@ -259,7 +290,7 @@ th, td {
 }
 
 th, td {
-  padding: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
 }
