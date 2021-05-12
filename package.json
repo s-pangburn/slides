@@ -16,7 +16,7 @@
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
-    "codemirror": "^5.42.2",
+    "codemirror": "^5.58.2",
     "highlightjs": "^9.12.0",
     "http-server": "^0.11.1",
     "react": "^16.7.0",
