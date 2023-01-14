@@ -30,6 +30,6 @@
     "redux-logger": "^3.0.6",
     "remarkable": "^1.7.1",
     "webpack": "^4.28.4",
-    "webpack-cli": "^3.2.1"
+    "webpack-cli": "^3.3.12"
   }
 }
